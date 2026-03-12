@@ -5,6 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Support\Facades\Auth;
 
 class IsAdmin
 {
@@ -13,11 +14,11 @@ class IsAdmin
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (!auth()->check()) {
+        if (!Auth::check()) {
             return redirect()->route('login');
         }
 
-        if (auth()->user()->role !== 'quan_tri') {
+        if (Auth::user()->role !== 'quan_tri') {
             abort(403, 'Bạn không có quyền truy cập trang quản trị viên');
         }
 
