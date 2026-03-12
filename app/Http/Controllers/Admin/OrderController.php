@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Order;
 use App\Models\OrderTracking;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
 {
@@ -71,7 +72,7 @@ class OrderController extends Controller
             'order_id' => $order->id,
             'status' => $validated['order_status'],
             'description' => $validated['description'] ?? null,
-            'updated_by' => auth()->id(),
+            'updated_by' => Auth::id(),
         ]);
 
         return redirect()->back()->with('success', 'Trạng thái đơn hàng đã được cập nhật!');
@@ -106,7 +107,7 @@ class OrderController extends Controller
             'order_id' => $order->id,
             'status' => 'da_huy',
             'description' => 'Đơn hàng bị hủy',
-            'updated_by' => auth()->id(),
+            'updated_by' => Auth::id(),
         ]);
 
         return redirect()->back()->with('success', 'Đơn hàng đã được hủy!');
