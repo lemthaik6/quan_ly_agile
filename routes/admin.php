@@ -5,9 +5,10 @@ use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\ReportController;
+use App\Http\Middleware\IsAdmin;
 use Illuminate\Support\Facades\Route;
 
-Route::middleware(['auth', 'is.admin'])->prefix('admin')->name('admin.')->group(function () {
+Route::middleware(['auth', IsAdmin::class])->prefix('admin')->name('admin.')->group(function () {
     // Dashboard
     Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
 
