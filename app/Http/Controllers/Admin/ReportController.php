@@ -41,7 +41,7 @@ class ReportController extends Controller
         // Sản phẩm bán chạy
         $topProducts = DB::table('order_items')
             ->join('products', 'order_items.product_id', '=', 'products.id')
-            ->select('products.id', 'products.name', DB::raw('SUM(order_items.quantity) as total_sold'), DB::raw('SUM(order_items.total_price) as revenue'))
+            ->select('products.id', 'products.name', DB::raw('SUM(order_items.quantity) as total_sold'), DB::raw('SUM(order_items.subtotal) as revenue'))
             ->groupBy('products.id', 'products.name')
             ->orderByDesc('total_sold')
             ->whereBetween('order_items.created_at', [$startDate, $endDate])
