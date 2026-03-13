@@ -15,15 +15,15 @@
             <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
                 <div>
                     <p class="text-gray-400 text-sm">Mã Đơn Hàng</p>
-                    <p class="text-white font-bold">{{ $order->order_number }}</p>
+                    <p class="text-gray-900 font-bold">{{ $order->order_number }}</p>
                 </div>
                 <div>
                     <p class="text-gray-400 text-sm">Khách Hàng</p>
-                    <p class="text-white font-bold">{{ $order->user->name ?? 'N/A' }}</p>
+                    <p class="text-gray-900 font-bold">{{ $order->user->name ?? 'N/A' }}</p>
                 </div>
                 <div>
                     <p class="text-gray-400 text-sm">Ngày Đặt</p>
-                    <p class="text-white font-bold">{{ $order->created_at->format('d/m/Y H:i') }}</p>
+                    <p class="text-gray-900 font-bold">{{ $order->created_at->format('d/m/Y H:i') }}</p>
                 </div>
                 <div>
                     <p class="text-gray-400 text-sm">Tổng Tiền</p>
@@ -34,9 +34,9 @@
             <hr class="border-cyan-400/10 mb-6">
 
             <!-- Địa chỉ giao hàng -->
-            <h3 class="font-bold text-white mb-4">Địa Chỉ Giao Hàng</h3>
+            <h3 class="font-bold text-gray-900 mb-4">Địa Chỉ Giao Hàng</h3>
             <div class="bg-cyan-400/5 p-4 rounded-lg border border-cyan-400/10">
-                <p class="text-white"><strong>{{ $order->shipping_name }}</strong></p>
+                <p class="text-gray-900"><strong>{{ $order->shipping_name }}</strong></p>
                 <p class="text-gray-300">{{ $order->shipping_address }}</p>
                 <p class="text-gray-300">{{ $order->shipping_ward ?? '' }}, {{ $order->shipping_district }}, {{ $order->shipping_city }}</p>
                 <p class="text-gray-300">Mã bưu điện: {{ $order->shipping_postal_code ?? 'N/A' }}</p>
@@ -115,7 +115,7 @@
                             </div>
                             <div class="flex-1">
                                 <div class="flex items-center justify-between mb-1">
-                                    <h4 class="font-semibold text-white">
+                                    <h4 class="font-semibold text-gray-900">
                                         @switch($track->status)
                                             @case('dang_cho')
                                                 Đơn hàng chờ xử lý
@@ -159,14 +159,14 @@
     <div class="space-y-6">
         <!-- Cập nhật trạng thái -->
         <div class="card">
-            <h3 class="font-bold text-white mb-4">Cập Nhật Trạng Thái</h3>
+            <h3 class="font-bold text-gray-900 mb-4">Cập Nhật Trạng Thái</h3>
             
             <form method="POST" action="{{ route('admin.orders.update-status', $order->id) }}" class="space-y-4">
                 @csrf
 
                 <div>
                     <label class="text-sm text-gray-400 block mb-2">Trạng Thái Đơn Hàng</label>
-                    <select name="order_status" class="w-full bg-cyan-400/5 border border-cyan-400/20 rounded-lg px-3 py-2 text-white">
+                    <select name="order_status" class="w-full bg-blue-50 border border-blue-200 rounded-lg px-3 py-2 text-gray-900">
                         <option value="dang_cho" {{ $order->order_status == 'dang_cho' ? 'selected' : '' }}>Đang chờ</option>
                         <option value="da_xac_nhan" {{ $order->order_status == 'da_xac_nhan' ? 'selected' : '' }}>Đã xác nhận</option>
                         <option value="dang_xu_ly" {{ $order->order_status == 'dang_xu_ly' ? 'selected' : '' }}>Đang xử lý</option>
@@ -178,7 +178,7 @@
 
                 <div>
                     <label class="text-sm text-gray-400 block mb-2">Ghi Chú (tuỳ chọn)</label>
-                    <textarea name="description" rows="3" placeholder="Nhập ghi chú..." class="w-full bg-cyan-400/5 border border-cyan-400/20 rounded-lg px-3 py-2 text-white text-sm"></textarea>
+                    <textarea name="description" rows="3" placeholder="Nhập ghi chú..." class="w-full bg-blue-50 border border-blue-200 rounded-lg px-3 py-2 text-gray-900 text-sm"></textarea>
                 </div>
 
                 <button type="submit" class="btn-primary w-full">
@@ -189,11 +189,11 @@
 
         <!-- Trạng thái thanh toán -->
         <div class="card">
-            <h3 class="font-bold text-white mb-4">Thanh Toán</h3>
+            <h3 class="font-bold text-gray-900 mb-4">Thanh Toán</h3>
             
             <div class="mb-4">
                 <p class="text-sm text-gray-400">Phương Thức</p>
-                <p class="text-white font-semibold">
+                <p class="text-gray-900 font-semibold">
                     @switch($order->payment_method)
                         @case('cod')
                             💵 Tiền mặt (COD)
@@ -216,7 +216,7 @@
 
                 <div>
                     <label class="text-sm text-gray-400 block mb-2">Trạng Thái Thanh Toán</label>
-                    <select name="payment_status" class="w-full bg-cyan-400/5 border border-cyan-400/20 rounded-lg px-3 py-2 text-white">
+                    <select name="payment_status" class="w-full bg-blue-50 border border-blue-200 rounded-lg px-3 py-2 text-gray-900">
                         <option value="dang_cho" {{ $order->payment_status == 'dang_cho' ? 'selected' : '' }}>Chưa thanh toán</option>
                         <option value="hoan_thanh" {{ $order->payment_status == 'hoan_thanh' ? 'selected' : '' }}>Đã thanh toán</option>
                         <option value="that_bai" {{ $order->payment_status == 'that_bai' ? 'selected' : '' }}>Thất bại</option>
@@ -232,7 +232,7 @@
 
         <!-- Hành động -->
         <div class="card">
-            <h3 class="font-bold text-white mb-4">Hành Động</h3>
+            <h3 class="font-bold text-gray-900 mb-4">Hành Động</h3>
             
             <div class="space-y-2">
                 @if($order->order_status != 'da_huy')

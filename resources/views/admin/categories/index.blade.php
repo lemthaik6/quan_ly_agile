@@ -6,7 +6,7 @@
 
 @section('content')
 <div class="flex items-center justify-between mb-6">
-    <h2 class="text-xl font-orbitron font-bold text-white">Danh Sách Danh Mục</h2>
+    <h2 class="text-xl font-orbitron font-bold text-gray-900">Danh Sách Danh Mục</h2>
     <a href="{{ route('admin.categories.create') }}" class="btn-primary">
         <i class="fas fa-plus mr-2"></i> Thêm Danh Mục
     </a>
@@ -19,7 +19,7 @@
             <div>
                 <input type="text" name="search" placeholder="Tìm kiếm danh mục..." 
                        value="{{ request('search') }}"
-                       class="w-full bg-cyan-400/5 border border-cyan-400/20 rounded-lg px-4 py-2 text-white placeholder-gray-500 focus:outline-none focus:border-cyan-400">
+                       class="w-full bg-blue-50 border border-blue-200 rounded-lg px-4 py-2 text-gray-900 placeholder-gray-500 focus:outline-none focus:border-blue-600">
             </div>
             <div class="flex gap-2">
                 <button type="submit" class="flex-1 btn-primary">
@@ -54,7 +54,7 @@
                     <tr>
                         <td class="font-semibold">{{ $category->id }}</td>
                         <td>
-                            <div class="font-semibold text-white">{{ $category->name }}</div>
+                            <div class="font-semibold text-gray-900">{{ $category->name }}</div>
                             @if($category->description)
                                 <div class="text-xs text-gray-400 mt-1">{{ Str::limit($category->description, 50) }}</div>
                             @endif
@@ -100,7 +100,7 @@
             {{ $categories->links('pagination::tailwind') }}
         </div>
     @else
-        <div class="text-center py-12 text-gray-400">
+        <div class="text-center py-12 text-gray-600">
             <i class="fas fa-inbox text-4xl mb-4 block opacity-50"></i>
             <p>Không tìm thấy danh mục nào</p>
         </div>

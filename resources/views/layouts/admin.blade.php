@@ -12,11 +12,11 @@
         html, body { height: 100%; }
         
         :root {
-            --bg-primary: #030014;
-            --bg-secondary: #0a0a1f;
-            --cyan-glow: #00f5ff;
-            --blue-glow: #0066ff;
-            --purple-glow: #8b5cf6;
+            --bg-primary: #f8f9fa;
+            --bg-secondary: #ffffff;
+            --blue-primary: #2563eb;
+            --blue-glow: #3b82f6;
+            --purple-glow: #7c3aed;
             --magenta-glow: #ec4899;
         }
         
@@ -24,25 +24,25 @@
         .font-inter { font-family: 'Inter', sans-serif; }
         
         body {
-            background: linear-gradient(180deg, var(--bg-primary) 0%, var(--bg-secondary) 50%, var(--bg-primary) 100%);
-            color: rgba(255, 255, 255, 0.9);
+            background: var(--bg-primary);
+            color: #1f2937;
         }
         
         .glass-effect {
-            background: rgba(255, 255, 255, 0.03);
+            background: #ffffff;
             backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            border: 1px solid #e5e7eb;
         }
         
         .sidebar-nav {
-            background: rgba(10, 10, 31, 0.6);
+            background: #ffffff;
             backdrop-filter: blur(20px);
-            border-right: 1px solid rgba(0, 245, 255, 0.1);
+            border-right: 1px solid #e5e7eb;
         }
         
         .nav-link {
             position: relative;
-            color: rgba(255, 255, 255, 0.6);
+            color: #6b7280;
             transition: all 0.3s ease;
             padding: 12px 20px;
             display: flex;
@@ -51,35 +51,35 @@
         }
         
         .nav-link:hover {
-            color: var(--cyan-glow);
-            background: rgba(0, 245, 255, 0.05);
+            color: #2563eb;
+            background: #eff6ff;
             padding-left: 24px;
         }
         
         .nav-link.active {
-            color: var(--cyan-glow);
-            background: rgba(0, 245, 255, 0.1);
-            border-left: 3px solid var(--cyan-glow);
+            color: #2563eb;
+            background: #dbeafe;
+            border-left: 3px solid #2563eb;
             padding-left: 17px;
         }
         
         .card {
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(0, 245, 255, 0.1);
+            background: #ffffff;
+            border: 1px solid #e5e7eb;
             border-radius: 12px;
             padding: 24px;
         }
         
         .stat-card {
-            background: linear-gradient(135deg, rgba(0, 245, 255, 0.05), rgba(139, 92, 246, 0.05));
-            border: 1px solid rgba(0, 245, 255, 0.1);
+            background: #ffffff;
+            border: 1px solid #e5e7eb;
             border-radius: 12px;
             padding: 20px;
         }
         
         .btn-primary {
-            background: linear-gradient(135deg, var(--cyan-glow), var(--blue-glow));
-            color: #000;
+            background: linear-gradient(135deg, #3b82f6, #2563eb);
+            color: #fff;
             padding: 10px 20px;
             border-radius: 8px;
             border: none;
@@ -90,13 +90,13 @@
         
         .btn-primary:hover {
             transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(0, 245, 255, 0.3);
+            box-shadow: 0 10px 30px rgba(59, 130, 246, 0.3);
         }
         
         .btn-secondary {
             background: transparent;
-            border: 1px solid rgba(0, 245, 255, 0.3);
-            color: var(--cyan-glow);
+            border: 1px solid #d1d5db;
+            color: #4b5563;
             padding: 10px 20px;
             border-radius: 8px;
             cursor: pointer;
@@ -105,8 +105,8 @@
         }
         
         .btn-secondary:hover {
-            background: rgba(0, 245, 255, 0.1);
-            border-color: var(--cyan-glow);
+            background: #f3f4f6;
+            border-color: #9ca3af;
         }
         
         .btn-danger {
@@ -132,24 +132,24 @@
         }
         
         thead tr {
-            background: rgba(0, 245, 255, 0.05);
+            background: #f3f4f6;
         }
         
         th {
             padding: 12px;
             text-align: left;
-            color: var(--cyan-glow);
+            color: #1f2937;
             font-weight: 600;
-            border-bottom: 1px solid rgba(0, 245, 255, 0.1);
+            border-bottom: 1px solid #e5e7eb;
         }
         
         td {
             padding: 12px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            border-bottom: 1px solid #f3f4f6;
         }
         
         tbody tr:hover {
-            background: rgba(0, 245, 255, 0.05);
+            background: #f9fafb;
         }
         
         .input-group {
@@ -160,7 +160,7 @@
         }
         
         .input-group label {
-            color: rgba(255, 255, 255, 0.8);
+            color: #374151;
             font-weight: 500;
             font-size: 14px;
         }
@@ -168,11 +168,11 @@
         .input-group input,
         .input-group textarea,
         .input-group select {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(0, 245, 255, 0.2);
+            background: #ffffff;
+            border: 1px solid #d1d5db;
             border-radius: 8px;
             padding: 10px 12px;
-            color: white;
+            color: #1f2937;
             font-family: 'Inter', sans-serif;
         }
         
@@ -180,8 +180,8 @@
         .input-group textarea:focus,
         .input-group select:focus {
             outline: none;
-            border-color: var(--cyan-glow);
-            box-shadow: 0 0 20px rgba(0, 245, 255, 0.2);
+            border-color: #3b82f6;
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.2);
         }
         
         .badge {
@@ -193,23 +193,23 @@
         }
         
         .badge-success {
-            background: rgba(34, 197, 94, 0.2);
-            color: #86efac;
+            background: #d1fae5;
+            color: #065f46;
         }
         
         .badge-warning {
-            background: rgba(234, 179, 8, 0.2);
-            color: #fcd34d;
+            background: #fef3c7;
+            color: #92400e;
         }
         
         .badge-danger {
-            background: rgba(239, 68, 68, 0.2);
-            color: #fca5a5;
+            background: #fee2e2;
+            color: #991b1b;
         }
         
         .badge-info {
-            background: rgba(59, 130, 246, 0.2);
-            color: #93c5fd;
+            background: #dbeafe;
+            color: #1e40af;
         }
         
         .alert {
@@ -219,15 +219,15 @@
         }
         
         .alert-success {
-            background: rgba(34, 197, 94, 0.1);
-            border: 1px solid rgba(34, 197, 94, 0.3);
-            color: #86efac;
+            background: #d1fae5;
+            border: 1px solid #6ee7b7;
+            color: #065f46;
         }
         
         .alert-danger {
-            background: rgba(239, 68, 68, 0.1);
-            border: 1px solid rgba(239, 68, 68, 0.3);
-            color: #fca5a5;
+            background: #fee2e2;
+            border: 1px solid #fca5a5;
+            color: #991b1b;
         }
         
         .pagination {
@@ -239,40 +239,40 @@
         
         .pagination a, .pagination span {
             padding: 8px 12px;
-            border: 1px solid rgba(0, 245, 255, 0.2);
+            border: 1px solid #d1d5db;
             border-radius: 6px;
-            color: rgba(255, 255, 255, 0.7);
+            color: #4b5563;
             cursor: pointer;
             transition: all 0.3s ease;
         }
         
         .pagination a:hover {
-            background: rgba(0, 245, 255, 0.1);
-            border-color: var(--cyan-glow);
-            color: var(--cyan-glow);
+            background: #eff6ff;
+            border-color: #3b82f6;
+            color: #3b82f6;
         }
         
         .pagination .active {
-            background: var(--cyan-glow);
-            color: #000;
-            border-color: var(--cyan-glow);
+            background: #3b82f6;
+            color: #fff;
+            border-color: #3b82f6;
         }
     </style>
     @yield('extra-css')
 </head>
-<body class="h-full bg-gray-950">
+<body class="h-full bg-gray-50">
     <div class="flex h-full">
         <!-- Sidebar -->
         <div class="w-64 sidebar-nav fixed h-full overflow-y-auto">
             <!-- Logo -->
-            <div class="p-6 border-b border-cyan-500/10">
+            <div class="p-6 border-b border-blue-200">
                 <div class="flex items-center gap-3">
                     <div class="w-10 h-10">
                         <svg viewbox="0 0 40 40" class="w-full h-full">
                             <defs>
                                 <linearGradient id="logoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                                    <stop offset="0%" stop-color="#00f5ff" />
-                                    <stop offset="100%" stop-color="#8b5cf6" />
+                                    <stop offset="0%" stop-color="#2563eb" />
+                                    <stop offset="100%" stop-color="#7c3aed" />
                                 </linearGradient>
                             </defs>
                             <polygon points="20,2 38,32 2,32" fill="none" stroke="url(#logoGrad)" stroke-width="2" />
@@ -280,8 +280,8 @@
                         </svg>
                     </div>
                     <div>
-                        <div class="font-orbitron font-bold text-lg text-cyan-400">LEMTHAI</div>
-                        <div class="text-xs text-cyan-400/60">Quản Trị</div>
+                        <div class="font-orbitron font-bold text-lg text-blue-600">LEMTHAI</div>
+                        <div class="text-xs text-blue-600/60">Quản Trị</div>
                     </div>
                 </div>
             </div>
@@ -294,7 +294,7 @@
                 </a>
                 
                 <div class="mt-8">
-                    <div class="px-6 py-2 text-xs font-orbitron text-cyan-400/50 uppercase tracking-wider">Sản Phẩm</div>
+                    <div class="px-6 py-2 text-xs font-orbitron text-blue-600/50 uppercase tracking-wider">Sản Phẩm</div>
                     <a href="{{ route('admin.products.index') }}" class="nav-link {{ request()->routeIs('admin.products.*') ? 'active' : '' }}">
                         <i class="fas fa-box-open w-5"></i>
                         <span>Danh sách</span>
@@ -306,7 +306,7 @@
                 </div>
                 
                 <div class="mt-8">
-                    <div class="px-6 py-2 text-xs font-orbitron text-cyan-400/50 uppercase tracking-wider">Bán Hàng</div>
+                    <div class="px-6 py-2 text-xs font-orbitron text-blue-600/50 uppercase tracking-wider">Bán Hàng</div>
                     <a href="{{ route('admin.orders.index') }}" class="nav-link {{ request()->routeIs('admin.orders.*') ? 'active' : '' }}">
                         <i class="fas fa-shopping-cart w-5"></i>
                         <span>Đơn hàng</span>
@@ -314,14 +314,14 @@
                 </div>
                 
                 <div class="mt-8">
-                    <div class="px-6 py-2 text-xs font-orbitron text-cyan-400/50 uppercase tracking-wider">Lập Báo Cáo</div>
+                    <div class="px-6 py-2 text-xs font-orbitron text-blue-600/50 uppercase tracking-wider">Lập Báo Cáo</div>
                     <a href="{{ route('admin.reports.index') }}" class="nav-link {{ request()->routeIs('admin.reports.*') ? 'active' : '' }}">
                         <i class="fas fa-chart-bar w-5"></i>
                         <span>Thống kê</span>
                     </a>
                 </div>
 
-                <hr class="my-8 border-cyan-500/10">
+                <hr class="my-8 border-blue-200">
                 
                 <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="nav-link">
                     <i class="fas fa-sign-out-alt w-5"></i>
@@ -336,15 +336,15 @@
             <div class="glass-effect px-8 py-4 border-b">
                 <div class="flex items-center justify-between">
                     <div>
-                        <h1 class="text-2xl font-orbitron font-bold text-white">@yield('page-title', 'Dashboard')</h1>
-                        <p class="text-sm text-gray-400 mt-1">@yield('page-subtitle', '')</p>
+                        <h1 class="text-2xl font-orbitron font-bold text-gray-900">@yield('page-title', 'Dashboard')</h1>
+                        <p class="text-sm text-gray-500 mt-1">@yield('page-subtitle', '')</p>
                     </div>
                     <div class="flex items-center gap-4">
                         <div class="text-right">
-                            <div class="text-sm text-gray-300">{{ auth()->user()->name }}</div>
+                            <div class="text-sm text-gray-700">{{ auth()->user()->name }}</div>
                             <div class="text-xs text-gray-500">{{ auth()->user()->role === 'quan_tri' ? 'Quản Trị Viên' : 'Khách Hàng' }}</div>
                         </div>
-                        <img src="https://ui-avatars.com/api/?name={{ auth()->user()->name }}&background=0a0a1f&color=00f5ff" alt="Avatar" class="w-10 h-10 rounded-full border border-cyan-400">
+                        <img src="https://ui-avatars.com/api/?name={{ auth()->user()->name }}&background=dbeafe&color=2563eb" alt="Avatar" class="w-10 h-10 rounded-full border border-blue-300">
                     </div>
                 </div>
             </div>

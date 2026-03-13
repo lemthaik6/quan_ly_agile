@@ -6,7 +6,7 @@
 
 @section('content')
 <div class="flex items-center justify-between mb-6">
-    <h2 class="text-xl font-orbitron font-bold text-white">Danh Sách Sản Phẩm</h2>
+    <h2 class="text-xl font-orbitron font-bold text-gray-900">Danh Sách Sản Phẩm</h2>
     <a href="{{ route('admin.products.create') }}" class="btn-primary">
         <i class="fas fa-plus mr-2"></i> Thêm Sản Phẩm
     </a>
@@ -19,10 +19,10 @@
             <div>
                 <input type="text" name="search" placeholder="Tìm kiếm theo tên hoặc SKU..." 
                        value="{{ request('search') }}"
-                       class="w-full bg-cyan-400/5 border border-cyan-400/20 rounded-lg px-4 py-2 text-white placeholder-gray-500 focus:outline-none focus:border-cyan-400">
+                       class="w-full bg-blue-50 border border-blue-200 rounded-lg px-4 py-2 text-gray-900 placeholder-gray-500 focus:outline-none focus:border-blue-600">
             </div>
             <div>
-                <select name="category" class="w-full bg-cyan-400/5 border border-cyan-400/20 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-cyan-400">
+                <select name="category" class="w-full bg-blue-50 border border-blue-200 rounded-lg px-4 py-2 text-gray-900 focus:outline-none focus:border-blue-600">
                     <option value="">Tất cả danh mục</option>
                     @foreach($categories as $cat)
                     <option value="{{ $cat->id }}" {{ request('category') == $cat->id ? 'selected' : '' }}>
@@ -63,20 +63,20 @@
                 <tbody>
                     @foreach($products as $product)
                     <tr>
-                        <td class="font-semibold">{{ $product->id }}</td>
+                        <td class="font-semibold text-gray-900">{{ $product->id }}</td>
                         <td>
-                            <div class="font-semibold text-white">{{ $product->name }}</div>
-                            <div class="text-xs text-gray-400">SKU: {{ $product->sku ?? 'N/A' }}</div>
+                            <div class="font-semibold text-gray-900">{{ $product->name }}</div>
+                            <div class="text-xs text-gray-600">SKU: {{ $product->sku ?? 'N/A' }}</div>
                         </td>
                         <td>
-                            <span class="text-sm text-cyan-400">{{ $product->category->name ?? 'N/A' }}</span>
+                            <span class="text-sm text-blue-600">{{ $product->category->name ?? 'N/A' }}</span>
                         </td>
-                        <td class="text-green-400 font-semibold">{{ number_format($product->price, 0, ',', '.') }}đ</td>
+                        <td class="text-green-600 font-semibold">{{ number_format($product->price, 0, ',', '.') }}đ</td>
                         <td>
-                            <span class="text-yellow-400">{{ $product->quantity_in_stock }}</span>
+                            <span class="text-yellow-600">{{ $product->quantity_in_stock }}</span>
                         </td>
                         <td>
-                            <span class="text-cyan-400">{{ $product->sold_count }}</span>
+                            <span class="text-blue-600">{{ $product->sold_count }}</span>
                         </td>
                         <td>
                             <div class="flex gap-2">
@@ -92,7 +92,7 @@
                         </td>
                         <td>
                             <div class="flex gap-2">
-                                <a href="{{ route('admin.products.edit', $product->id) }}" class="text-cyan-400 hover:text-cyan-300 text-sm" title="Chỉnh sửa">
+                                <a href="{{ route('admin.products.edit', $product->id) }}" class="text-blue-600 hover:text-blue-800 text-sm" title="Chỉnh sửa">
                                     <i class="fas fa-edit"></i>
                                 </a>
                                 <form method="POST" action="{{ route('admin.products.destroy', $product->id) }}" style="display:inline;" onsubmit="return confirm('Bạn chắc chắn muốn xóa?');">
@@ -111,11 +111,11 @@
         </div>
 
         <!-- Pagination -->
-        <div class="px-6 py-4 border-t border-cyan-400/10">
+        <div class="px-6 py-4 border-t border-blue-200">
             {{ $products->links('pagination::tailwind') }}
         </div>
     @else
-        <div class="text-center py-12 text-gray-400">
+        <div class="text-center py-12 text-gray-600">
             <i class="fas fa-inbox text-4xl mb-4 block opacity-50"></i>
             <p>Không tìm thấy sản phẩm nào</p>
         </div>

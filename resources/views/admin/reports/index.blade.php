@@ -40,7 +40,7 @@
         <div class="flex items-center justify-between">
             <div>
                 <p class="text-gray-400 text-sm">Doanh Thu</p>
-                <h3 class="text-3xl font-bold text-white mt-2">{{ number_format($revenue, 0, ',', '.') }}đ</h3>
+                <h3 class="text-3xl font-bold text-gray-900 mt-2">{{ number_format($revenue, 0, ',', '.') }}đ</h3>
                 <p class="text-xs text-green-400 mt-2">
                     <i class="fas fa-check-circle"></i> {{ $revenueOrders }} đơn thành công
                 </p>
@@ -55,7 +55,7 @@
         <div class="flex items-center justify-between">
             <div>
                 <p class="text-gray-400 text-sm">Tổng Đơn Hàng</p>
-                <h3 class="text-3xl font-bold text-white mt-2">{{ $totalOrders }}</h3>
+                <h3 class="text-3xl font-bold text-gray-900 mt-2">{{ $totalOrders }}</h3>
                 <p class="text-xs text-red-400 mt-2">
                     <i class="fas fa-times-circle"></i> {{ $canceledOrders }} hủy
                 </p>
@@ -70,7 +70,7 @@
         <div class="flex items-center justify-between">
             <div>
                 <p class="text-gray-400 text-sm">Khách Hàng Mới</p>
-                <h3 class="text-3xl font-bold text-white mt-2">{{ $newCustomers }}</h3>
+                <h3 class="text-3xl font-bold text-gray-900 mt-2">{{ $newCustomers }}</h3>
                 <p class="text-xs text-cyan-400 mt-2">
                     Trong khoảng thời gian
                 </p>
@@ -101,7 +101,7 @@
 <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
     <!-- Trạng thái đơn hàng -->
     <div class="card">
-        <h2 class="text-lg font-orbitron font-bold text-white mb-6">Trạng Thái Đơn Hàng</h2>
+        <h2 class="text-lg font-orbitron font-bold text-gray-900 mb-6">Trạng Thái Đơn Hàng</h2>
         <div class="space-y-4">
             @foreach($ordersByStatus as $status)
                 @php
@@ -125,7 +125,7 @@
                 @endphp
                 <div>
                     <div class="flex justify-between mb-1">
-                        <span class="text-white font-semibold">{{ $statusNames[$status->order_status] ?? 'N/A' }}</span>
+                        <span class="text-gray-900 font-semibold">{{ $statusNames[$status->order_status] ?? 'N/A' }}</span>
                         <span class="text-gray-400">{{ $status->count }} ({{ round($percent) }}%)</span>
                     </div>
                     <div class="w-full bg-gray-700 rounded-full h-2">
@@ -138,7 +138,7 @@
 
     <!-- Phương thức thanh toán -->
     <div class="card">
-        <h2 class="text-lg font-orbitron font-bold text-white mb-6">Phương Thức Thanh Toán</h2>
+        <h2 class="text-lg font-orbitron font-bold text-gray-900 mb-6">Phương Thức Thanh Toán</h2>
         <div class="space-y-4">
             @foreach($paymentMethods as $payment)
                 @php
@@ -152,7 +152,7 @@
                 @endphp
                 <div class="p-3 rounded-lg bg-cyan-400/5 border border-cyan-400/10">
                     <div class="flex items-center justify-between mb-2">
-                        <span class="text-white font-semibold">{{ $paymentNames[$payment->payment_method] ?? $payment->payment_method }}</span>
+                        <span class="text-gray-900 font-semibold">{{ $paymentNames[$payment->payment_method] ?? $payment->payment_method }}</span>
                         <span class="text-green-400 font-bold">{{ number_format($payment->total, 0, ',', '.') }}đ</span>
                     </div>
                     <div class="text-xs text-gray-400">{{ $payment->count }} đơn ({{ round($percent) }}%)</div>
@@ -164,7 +164,7 @@
 
 <!-- Sản phẩm bán chạy -->
 <div class="card mb-6">
-    <h2 class="text-lg font-orbitron font-bold text-white mb-6">Sản Phẩm Bán Chạy Nhất</h2>
+    <h2 class="text-lg font-orbitron font-bold text-gray-900 mb-6">Sản Phẩm Bán Chạy Nhất</h2>
     
     @if($topProducts->count() > 0)
         <div class="overflow-x-auto">
@@ -209,7 +209,7 @@
 
 <!-- Doanh thu theo ngày -->
 <div class="card">
-    <h2 class="text-lg font-orbitron font-bold text-white mb-6">Doanh Thu Theo Ngày</h2>
+    <h2 class="text-lg font-orbitron font-bold text-gray-900 mb-6">Doanh Thu Theo Ngày</h2>
     
     @if($dailyRevenue->count() > 0)
         <div class="overflow-x-auto">

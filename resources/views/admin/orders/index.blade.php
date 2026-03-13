@@ -6,7 +6,7 @@
 
 @section('content')
 <div class="flex items-center justify-between mb-6">
-    <h2 class="text-xl font-orbitron font-bold text-white">Danh Sách Đơn Hàng</h2>
+    <h2 class="text-xl font-orbitron font-bold text-gray-900">Danh Sách Đơn Hàng</h2>
 </div>
 
 <!-- Filters -->
@@ -19,7 +19,7 @@
                        class="w-full bg-cyan-400/5 border border-cyan-400/20 rounded-lg px-4 py-2 text-white placeholder-gray-500 focus:outline-none focus:border-cyan-400">
             </div>
             <div>
-                <select name="status" class="w-full bg-cyan-400/5 border border-cyan-400/20 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-cyan-400">
+                <select name="status" class="w-full bg-blue-50 border border-blue-200 rounded-lg px-4 py-2 text-gray-900 focus:outline-none focus:border-blue-600">
                     <option value="">Tất cả trạng thái</option>
                     <option value="dang_cho" {{ request('status') == 'dang_cho' ? 'selected' : '' }}>Đang chờ</option>
                     <option value="da_xac_nhan" {{ request('status') == 'da_xac_nhan' ? 'selected' : '' }}>Đã xác nhận</option>
@@ -30,7 +30,7 @@
                 </select>
             </div>
             <div>
-                <select name="payment_status" class="w-full bg-cyan-400/5 border border-cyan-400/20 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-cyan-400">
+                <select name="payment_status" class="w-full bg-blue-50 border border-blue-200 rounded-lg px-4 py-2 text-gray-900 focus:outline-none focus:border-blue-600">
                     <option value="">Tất cả thanh toán</option>
                     <option value="dang_cho" {{ request('payment_status') == 'dang_cho' ? 'selected' : '' }}>Chưa thanh toán</option>
                     <option value="hoan_thanh" {{ request('payment_status') == 'hoan_thanh' ? 'selected' : '' }}>Đã thanh toán</option>
@@ -72,7 +72,7 @@
                     <tr>
                         <td class="font-semibold text-cyan-400">#{{ $order->order_number }}</td>
                         <td>
-                            <div class="text-white font-semibold">{{ $order->user->name ?? 'N/A' }}</div>
+                            <div class="text-gray-900 font-semibold">{{ $order->user->name ?? 'N/A' }}</div>
                             <div class="text-xs text-gray-400">{{ $order->user->email ?? '' }}</div>
                         </td>
                         <td class="text-green-400 font-bold">{{ number_format($order->final_amount, 0, ',', '.') }}đ</td>
@@ -147,7 +147,7 @@
             {{ $orders->links('pagination::tailwind') }}
         </div>
     @else
-        <div class="text-center py-12 text-gray-400">
+        <div class="text-center py-12 text-gray-600">
             <i class="fas fa-inbox text-4xl mb-4 block opacity-50"></i>
             <p>Không tìm thấy đơn hàng nào</p>
         </div>
