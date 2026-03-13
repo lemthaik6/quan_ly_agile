@@ -64,6 +64,35 @@ class AdminController extends Controller
                 ];
             });
 
+        // Phân bố trạng thái đơn hàng
+        $orderStatusDistribution = [
+            'dang_cho' => Order::where('order_status', 'dang_cho')->count(),
+            'dang_xu_ly' => Order::where('order_status', 'dang_xu_ly')->count(),
+            'dang_giao' => Order::where('order_status', 'dang_giao')->count(),
+            'da_giao' => Order::where('order_status', 'da_giao')->count(),
+            'da_huy' => Order::where('order_status', 'da_huy')->count(),
+        ];
+
+        // Doanh thu hôm nay
+        $todayRevenue = Order::where('payment_status', 'hoan_thanh')
+            ->whereDate('created_at', now()->today())
+            ->sum('final_amount');
+
+        // Đơn hàng hôm nay
+        $todayOrders = Order::whereDate('created_at', now()->today())->count();
+
+        // Top 5 sản phẩm bán chạy nhất
+        $topSellingProducts = Product::select('name', 'sold_count', 'price')
+            ->where('is_active', 1)
+            ->orderBy('sold_count', 'desc')
+            ->limit(5)
+            ->get();
+
+        // Khách hàng mới trong 7 ngày
+        $newCustomers = User::where('role', 'khach_hang')
+            ->whereBetween('created_at', [now()->subDays(7), now()])
+            ->count();
+
         return view('admin.dashboard', compact(
             'totalProducts',
             'activeProducts',
@@ -76,7 +105,12 @@ class AdminController extends Controller
             'newCustomersThisMonth',
             'recentOrders',
             'topProducts',
-            'monthlyRevenue'
+            'monthlyRevenue',
+            'orderStatusDistribution',
+            'todayRevenue',
+            'todayOrders',
+            'topSellingProducts',
+            'newCustomers'
         ));
     }
 
