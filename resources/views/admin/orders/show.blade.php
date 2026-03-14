@@ -1,254 +1,139 @@
 @extends('layouts.admin')
 
-@section('title', 'Chi tiết đơn hàng')
-@section('page-title', 'Chi Tiết Đơn Hàng')
-@section('page-subtitle', 'Mã ĐH: #' . $order->order_number)
+@section('title', 'Chi Tiết Đơn Hàng')
 
 @section('content')
-<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-    <!-- Main Content -->
-    <div class="lg:col-span-2 space-y-6">
-        <!-- Thông tin cơ bản -->
-        <div class="card">
-            <h2 class="text-xl font-orbitron font-bold text-cyan-400 mb-6">Thông Tin Đơn Hàng</h2>
-            
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-                <div>
-                    <p class="text-gray-400 text-sm">Mã Đơn Hàng</p>
-                    <p class="text-gray-900 font-bold">{{ $order->order_number }}</p>
-                </div>
-                <div>
-                    <p class="text-gray-400 text-sm">Khách Hàng</p>
-                    <p class="text-gray-900 font-bold">{{ $order->user->name ?? 'N/A' }}</p>
-                </div>
-                <div>
-                    <p class="text-gray-400 text-sm">Ngày Đặt</p>
-                    <p class="text-gray-900 font-bold">{{ $order->created_at->format('d/m/Y H:i') }}</p>
-                </div>
-                <div>
-                    <p class="text-gray-400 text-sm">Tổng Tiền</p>
-                    <p class="text-green-400 font-bold">{{ number_format($order->final_amount, 0, ',', '.') }}đ</p>
-                </div>
-            </div>
-
-            <hr class="border-cyan-400/10 mb-6">
-
-            <!-- Địa chỉ giao hàng -->
-            <h3 class="font-bold text-gray-900 mb-4">Địa Chỉ Giao Hàng</h3>
-            <div class="bg-cyan-400/5 p-4 rounded-lg border border-cyan-400/10">
-                <p class="text-gray-900"><strong>{{ $order->shipping_name }}</strong></p>
-                <p class="text-gray-300">{{ $order->shipping_address }}</p>
-                <p class="text-gray-300">{{ $order->shipping_ward ?? '' }}, {{ $order->shipping_district }}, {{ $order->shipping_city }}</p>
-                <p class="text-gray-300">Mã bưu điện: {{ $order->shipping_postal_code ?? 'N/A' }}</p>
-                <p class="text-cyan-400">{{ $order->shipping_phone }}</p>
-                @if($order->shipping_email)
-                    <p class="text-cyan-400">{{ $order->shipping_email }}</p>
-                @endif
-            </div>
-        </div>
-
-        <!-- Chi tiết sản phẩm -->
-        <div class="card">
-            <h2 class="text-xl font-orbitron font-bold text-cyan-400 mb-6">Sản Phẩm Đơn Hàng</h2>
-            
-            <div class="overflow-x-auto">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Sản Phẩm</th>
-                            <th class="text-right">Số Lượng</th>
-                            <th class="text-right">Đơn Giá</th>
-                            <th class="text-right">Thành Tiền</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach($order->items as $item)
-                        <tr>
-                            <td>
-                                <a href="{{ route('admin.products.edit', $item->product_id) }}" class="text-cyan-400 hover:text-cyan-300">
-                                    {{ $item->product_name }}
-                                </a>
-                            </td>
-                            <td class="text-right">{{ $item->quantity }}</td>
-                            <td class="text-right">{{ number_format($item->unit_price, 0, ',', '.') }}đ</td>
-                            <td class="text-right font-bold">{{ number_format($item->total_price, 0, ',', '.') }}đ</td>
-                        </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            </div>
-
-            <div class="mt-6 space-y-2 text-right">
-                <div class="flex justify-end gap-4">
-                    <span>Tổng sản phẩm:</span>
-                    <span class="font-bold">{{ number_format($order->total_amount, 0, ',', '.') }}đ</span>
-                </div>
-                @if($order->discount_amount > 0)
-                    <div class="flex justify-end gap-4 text-orange-400">
-                        <span>Giảm giá:</span>
-                        <span class="font-bold">-{{ number_format($order->discount_amount, 0, ',', '.') }}đ</span>
-                    </div>
-                @endif
-                @if($order->shipping_cost > 0)
-                    <div class="flex justify-end gap-4 text-cyan-400">
-                        <span>Vận chuyển:</span>
-                        <span class="font-bold">{{ number_format($order->shipping_cost, 0, ',', '.') }}đ</span>
-                    </div>
-                @endif
-                <div class="flex justify-end gap-4 text-green-400 font-bold text-lg">
-                    <span>Tổng cộng:</span>
-                    <span>{{ number_format($order->final_amount, 0, ',', '.') }}đ</span>
-                </div>
-            </div>
-        </div>
-
-        <!-- Lịch sử theo dõi -->
-        <div class="card">
-            <h2 class="text-xl font-orbitron font-bold text-cyan-400 mb-6">Lịch Sử Theo Dõi</h2>
-            
-            @if($order->tracking->count() > 0)
-                <div class="space-y-4">
-                    @foreach($order->tracking->sortByDesc('created_at') as $track)
-                        <div class="flex gap-4 pb-4 border-b border-cyan-400/10 last:border-b-0">
-                            <div class="flex-shrink-0">
-                                <div class="w-3 h-3 bg-cyan-400 rounded-full mt-1.5"></div>
-                            </div>
-                            <div class="flex-1">
-                                <div class="flex items-center justify-between mb-1">
-                                    <h4 class="font-semibold text-gray-900">
-                                        @switch($track->status)
-                                            @case('dang_cho')
-                                                Đơn hàng chờ xử lý
-                                                @break
-                                            @case('da_xac_nhan')
-                                                Đơn hàng đã xác nhận
-                                                @break
-                                            @case('dang_xu_ly')
-                                                Đơn hàng đang chuẩn bị
-                                                @break
-                                            @case('da_gui')
-                                                Đơn hàng đã gửi
-                                                @break
-                                            @case('da_giao')
-                                                Đơn hàng đã giao từ
-                                                @break
-                                            @case('da_huy')
-                                                Đơn hàng bị hủy
-                                                @break
-                                        @endswitch
-                                    </h4>
-                                    <span class="text-xs text-gray-500">{{ $track->created_at->format('d/m/Y H:i') }}</span>
-                                </div>
-                                @if($track->description)
-                                    <p class="text-sm text-gray-300">{{ $track->description }}</p>
-                                @endif
-                                @if($track->location)
-                                    <p class="text-xs text-cyan-400 mt-1">📍 {{ $track->location }}</p>
-                                @endif
-                            </div>
-                        </div>
-                    @endforeach
-                </div>
-            @else
-                <p class="text-gray-400 text-center py-8">Chưa có lịch sử theo dõi</p>
-            @endif
-        </div>
+<div class="space-y-6">
+    <div class="flex justify-between items-center">
+        <h1 class="text-3xl font-bold">Đơn hàng #{{ str_pad($order->id, 6, '0', STR_PAD_LEFT) }}</h1>
+        <a href="{{ route('admin.orders.index') }}" class="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700">Quay lại</a>
     </div>
 
-    <!-- Sidebar -->
-    <div class="space-y-6">
-        <!-- Cập nhật trạng thái -->
-        <div class="card">
-            <h3 class="font-bold text-gray-900 mb-4">Cập Nhật Trạng Thái</h3>
+    <!-- Order Info & Status -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <!-- Order Details -->
+        <div class="lg:col-span-2 bg-white p-6 rounded-lg shadow">
+            <h2 class="text-lg font-semibold mb-4">Thông Tin Đơn Hàng</h2>
             
-            <form method="POST" action="{{ route('admin.orders.update-status', $order->id) }}" class="space-y-4">
-                @csrf
-
+            <div class="grid grid-cols-2 gap-4 mb-6">
                 <div>
-                    <label class="text-sm text-gray-400 block mb-2">Trạng Thái Đơn Hàng</label>
-                    <select name="order_status" class="w-full bg-blue-50 border border-blue-200 rounded-lg px-3 py-2 text-gray-900">
-                        <option value="dang_cho" {{ $order->order_status == 'dang_cho' ? 'selected' : '' }}>Đang chờ</option>
-                        <option value="da_xac_nhan" {{ $order->order_status == 'da_xac_nhan' ? 'selected' : '' }}>Đã xác nhận</option>
-                        <option value="dang_xu_ly" {{ $order->order_status == 'dang_xu_ly' ? 'selected' : '' }}>Đang xử lý</option>
-                        <option value="da_gui" {{ $order->order_status == 'da_gui' ? 'selected' : '' }}>Đã gửi</option>
-                        <option value="da_giao" {{ $order->order_status == 'da_giao' ? 'selected' : '' }}>Đã giao</option>
-                        <option value="da_huy" {{ $order->order_status == 'da_huy' ? 'selected' : '' }}>Đã hủy</option>
-                    </select>
+                    <p class="text-gray-600 text-sm">Khách hàng</p>
+                    <p class="font-semibold">{{ $order->user->name ?? 'N/A' }}</p>
                 </div>
-
                 <div>
-                    <label class="text-sm text-gray-400 block mb-2">Ghi Chú (tuỳ chọn)</label>
-                    <textarea name="description" rows="3" placeholder="Nhập ghi chú..." class="w-full bg-blue-50 border border-blue-200 rounded-lg px-3 py-2 text-gray-900 text-sm"></textarea>
+                    <p class="text-gray-600 text-sm">Email</p>
+                    <p class="font-semibold">{{ $order->user->email ?? 'N/A' }}</p>
                 </div>
+                <div>
+                    <p class="text-gray-600 text-sm">Điện thoại</p>
+                    <p class="font-semibold">{{ $order->user->phone ?? 'N/A' }}</p>
+                </div>
+                <div>
+                    <p class="text-gray-600 text-sm">Ngày tạo</p>
+                    <p class="font-semibold">{{ $order->created_at->format('d/m/Y H:i') }}</p>
+                </div>
+            </div>
 
-                <button type="submit" class="btn-primary w-full">
-                    <i class="fas fa-check mr-2"></i> Cập Nhật
-                </button>
-            </form>
+            <h3 class="text-lg font-semibold mb-4">Địa Chỉ Giao Hàng</h3>
+            <div class="bg-gray-50 p-4 rounded mb-6">
+                <p>{{ $order->shipping_address ?? 'Không có' }}</p>
+                <p class="text-sm text-gray-600 mt-2">{{ $order->shipping_city ?? '' }} - {{ $order->shipping_zip ?? '' }}</p>
+            </div>
+
+            <!-- Order Items -->
+            <h3 class="text-lg font-semibold mb-4">Chi Tiết Sản Phẩm</h3>
+            <table class="w-full text-sm">
+                <thead class="bg-gray-100">
+                    <tr>
+                        <th class="px-4 py-2 text-left">Sản phẩm</th>
+                        <th class="px-4 py-2 text-left">Đơn giá</th>
+                        <th class="px-4 py-2 text-left">Số lượng</th>
+                        <th class="px-4 py-2 text-left">Thành tiền</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @forelse($order->items as $item)
+                        <tr class="border-b">
+                            <td class="px-4 py-2">{{ $item->product->name ?? 'Sản phẩm đã xóa' }}</td>
+                            <td class="px-4 py-2">{{ number_format($item->price, 0, ',', '.') }} ₫</td>
+                            <td class="px-4 py-2">{{ $item->quantity }}</td>
+                            <td class="px-4 py-2">{{ number_format($item->price * $item->quantity, 0, ',', '.') }} ₫</td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="4" class="px-4 py-2 text-center text-gray-500">Không có sản phẩm</td>
+                        </tr>
+                    @endforelse
+                </tbody>
+            </table>
         </div>
 
-        <!-- Trạng thái thanh toán -->
-        <div class="card">
-            <h3 class="font-bold text-gray-900 mb-4">Thanh Toán</h3>
+        <!-- Order Summary -->
+        <div class="bg-white p-6 rounded-lg shadow h-fit">
+            <h2 class="text-lg font-semibold mb-4">Tóm Tắt Đơn Hàng</h2>
             
+            <div class="space-y-2 mb-4">
+                <div class="flex justify-between">
+                    <span>Tổng sản phẩm</span>
+                    <span class="font-semibold">{{ number_format($order->items->sum('quantity'), 0) }}</span>
+                </div>
+                <div class="flex justify-between">
+                    <span>Subtotal</span>
+                    <span class="font-semibold">{{ number_format($order->items->sum(fn($item) => $item->price * $item->quantity), 0, ',', '.') }} ₫</span>
+                </div>
+                <div class="flex justify-between">
+                    <span>Phí vận chuyển</span>
+                    <span class="font-semibold">{{ number_format($order->shipping_cost ?? 0, 0, ',', '.') }} ₫</span>
+                </div>
+                <div class="border-t pt-2 flex justify-between text-lg font-bold">
+                    <span>Tổng cộng</span>
+                    <span class="text-blue-600">{{ number_format($order->total_price, 0, ',', '.') }} ₫</span>
+                </div>
+            </div>
+
+            <hr class="my-4">
+
             <div class="mb-4">
-                <p class="text-sm text-gray-400">Phương Thức</p>
-                <p class="text-gray-900 font-semibold">
-                    @switch($order->payment_method)
-                        @case('cod')
-                            💵 Tiền mặt (COD)
-                            @break
-                        @case('chuyen_khoan')
-                            🏦 Chuyển khoản
-                            @break
-                        @case('the_tin_dung')
-                            💳 Thẻ tín dụng
-                            @break
-                        @case('vi_dien_tu')
-                            📱 Ví điện tử
-                            @break
-                    @endswitch
-                </p>
+                <p class="text-gray-600 text-sm mb-2">Trạng thái đơn hàng</p>
+                <span class="px-3 py-1 rounded-full text-sm font-semibold 
+                    {{ $order->order_status === 'pending' ? 'bg-yellow-100 text-yellow-800' : '' }}
+                    {{ $order->order_status === 'processing' ? 'bg-blue-100 text-blue-800' : '' }}
+                    {{ $order->order_status === 'shipped' ? 'bg-indigo-100 text-indigo-800' : '' }}
+                    {{ $order->order_status === 'delivered' ? 'bg-green-100 text-green-800' : '' }}
+                    {{ $order->order_status === 'cancelled' ? 'bg-red-100 text-red-800' : '' }}
+                ">
+                    {{ ucfirst(str_replace('_', ' ', $order->order_status)) }}
+                </span>
             </div>
 
-            <form method="POST" action="{{ route('admin.orders.update-payment-status', $order->id) }}" class="space-y-4">
+            <!-- Status Update Form -->
+            <form method="POST" action="{{ route('admin.orders.update', $order) }}" class="space-y-2">
                 @csrf
-
-                <div>
-                    <label class="text-sm text-gray-400 block mb-2">Trạng Thái Thanh Toán</label>
-                    <select name="payment_status" class="w-full bg-blue-50 border border-blue-200 rounded-lg px-3 py-2 text-gray-900">
-                        <option value="dang_cho" {{ $order->payment_status == 'dang_cho' ? 'selected' : '' }}>Chưa thanh toán</option>
-                        <option value="hoan_thanh" {{ $order->payment_status == 'hoan_thanh' ? 'selected' : '' }}>Đã thanh toán</option>
-                        <option value="that_bai" {{ $order->payment_status == 'that_bai' ? 'selected' : '' }}>Thất bại</option>
-                        <option value="hoan_tien" {{ $order->payment_status == 'hoan_tien' ? 'selected' : '' }}>Hoàn tiền</option>
-                    </select>
-                </div>
-
-                <button type="submit" class="btn-primary w-full">
-                    <i class="fas fa-save mr-2"></i> Lưu
-                </button>
+                @method('PUT')
+                
+                <select name="order_status" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm">
+                    <option value="pending" {{ $order->order_status === 'pending' ? 'selected' : '' }}>Chờ xác nhận</option>
+                    <option value="processing" {{ $order->order_status === 'processing' ? 'selected' : '' }}>Đang xử lý</option>
+                    <option value="shipped" {{ $order->order_status === 'shipped' ? 'selected' : '' }}>Đã gửi</option>
+                    <option value="delivered" {{ $order->order_status === 'delivered' ? 'selected' : '' }}>Đã giao</option>
+                    <option value="cancelled" {{ $order->order_status === 'cancelled' ? 'selected' : '' }}>Đã hủy</option>
+                </select>
+                
+                <button type="submit" class="w-full px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 text-sm">Cập nhật trạng thái</button>
             </form>
         </div>
+    </div>
 
-        <!-- Hành động -->
-        <div class="card">
-            <h3 class="font-bold text-gray-900 mb-4">Hành Động</h3>
-            
+    <!-- Order Tracking -->
+    @if($order->tracking)
+        <div class="bg-white p-6 rounded-lg shadow">
+            <h2 class="text-lg font-semibold mb-4">Theo Dõi Vận Chuyển</h2>
             <div class="space-y-2">
-                @if($order->order_status != 'da_huy')
-                    <form method="POST" action="{{ route('admin.orders.cancel', $order->id) }}" onsubmit="return confirm('Hủy đơn hàng?');">
-                        @csrf
-                        <button type="submit" class="btn-danger w-full">
-                            <i class="fas fa-times mr-2"></i> Hủy Đơn Hàng
-                        </button>
-                    </form>
-                @endif
-                
-                <a href="{{ route('admin.orders.export', $order->id) }}" class="btn-secondary w-full block text-center">
-                    <i class="fas fa-download mr-2"></i> Xuất PDF
-                </a>
+                <p><strong>Đơn vị vận chuyển:</strong> {{ $order->tracking->carrier ?? 'N/A' }}</p>
+                <p><strong>Mã tracking:</strong> {{ $order->tracking->tracking_number ?? 'N/A' }}</p>
+                <p><strong>Trạng thái:</strong> {{ $order->tracking->status ?? 'N/A' }}</p>
             </div>
         </div>
-    </div>
+    @endif
 </div>
 @endsection

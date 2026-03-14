@@ -1,124 +1,71 @@
 @extends('layouts.admin')
 
-@section('title', 'Quản lý sản phẩm')
-@section('page-title', 'Quản Lý Sản Phẩm')
-@section('page-subtitle', 'Danh sách tất cả sản phẩm trong hệ thống')
+@section('title', 'Quản Lý Sản Phẩm')
 
 @section('content')
-<div class="flex items-center justify-between mb-6">
-    <h2 class="text-xl font-orbitron font-bold text-gray-900">Danh Sách Sản Phẩm</h2>
-    <a href="{{ route('admin.products.create') }}" class="btn-primary">
-        <i class="fas fa-plus mr-2"></i> Thêm Sản Phẩm
-    </a>
-</div>
-
-<!-- Filters -->
-<div class="card mb-6">
-    <form method="GET" action="{{ route('admin.products.index') }}" class="space-y-4">
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div>
-                <input type="text" name="search" placeholder="Tìm kiếm theo tên hoặc SKU..." 
-                       value="{{ request('search') }}"
-                       class="w-full bg-blue-50 border border-blue-200 rounded-lg px-4 py-2 text-gray-900 placeholder-gray-500 focus:outline-none focus:border-blue-600">
-            </div>
-            <div>
-                <select name="category" class="w-full bg-blue-50 border border-blue-200 rounded-lg px-4 py-2 text-gray-900 focus:outline-none focus:border-blue-600">
-                    <option value="">Tất cả danh mục</option>
-                    @foreach($categories as $cat)
-                    <option value="{{ $cat->id }}" {{ request('category') == $cat->id ? 'selected' : '' }}>
-                        {{ $cat->name }}
+<div class="space-y-6">
+    <h1 class="text-3xl font-bold">Danh Sách Sản Phẩm</h1>
+    
+    <!-- Search & Filter -->
+    <div class="bg-white p-4 rounded-lg shadow">
+        <form method="GET" class="flex gap-4">
+            <input type="text" name="search" placeholder="Tìm sản phẩm..." value="{{ request('search') }}" class="flex-1 px-4 py-2 border border-gray-300 rounded-lg">
+            
+            <select name="category" class="px-4 py-2 border border-gray-300 rounded-lg">
+                <option value="">Tất cả danh mục</option>
+                @foreach($categories as $category)
+                    <option value="{{ $category->id }}" {{ request('category') == $category->id ? 'selected' : '' }}>
+                        {{ $category->name }}
                     </option>
-                    @endforeach
-                </select>
-            </div>
-            <div class="flex gap-2">
-                <button type="submit" class="flex-1 btn-primary">
-                    <i class="fas fa-search mr-2"></i> Tìm Kiếm
-                </button>
-                <a href="{{ route('admin.products.index') }}" class="flex-1 btn-secondary">
-                    <i class="fas fa-redo mr-2"></i> Đặt Lại
-                </a>
-            </div>
-        </div>
-    </form>
-</div>
+                @endforeach
+            </select>
+            
+            <button type="submit" class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">Tìm kiếm</button>
+            <a href="{{ route('admin.products.create') }}" class="px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700">Thêm mới</a>
+        </form>
+    </div>
 
-<!-- Table -->
-<div class="card overflow-hidden">
-    @if($products->count() > 0)
-        <div class="overflow-x-auto">
-            <table>
-                <thead>
-                    <tr>
-                        <th style="width: 50px;">ID</th>
-                        <th>Tên Sản Phẩm</th>
-                        <th>Danh Mục</th>
-                        <th>Giá</th>
-                        <th>Tồn Kho</th>
-                        <th>Bán Được</th>
-                        <th>Trạng Thái</th>
-                        <th style="width: 150px;">Hành Động</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($products as $product)
-                    <tr>
-                        <td class="font-semibold text-gray-900">{{ $product->id }}</td>
-                        <td>
-                            <div class="font-semibold text-gray-900">{{ $product->name }}</div>
-                            <div class="text-xs text-gray-600">SKU: {{ $product->sku ?? 'N/A' }}</div>
-                        </td>
-                        <td>
-                            <span class="text-sm text-blue-600">{{ $product->category->name ?? 'N/A' }}</span>
-                        </td>
-                        <td class="text-green-600 font-semibold">{{ number_format($product->price, 0, ',', '.') }}đ</td>
-                        <td>
-                            <span class="text-yellow-600">{{ $product->quantity_in_stock }}</span>
-                        </td>
-                        <td>
-                            <span class="text-blue-600">{{ $product->sold_count }}</span>
-                        </td>
-                        <td>
-                            <div class="flex gap-2">
-                                @if($product->is_active)
-                                    <span class="badge badge-success">Hoạt động</span>
-                                @else
-                                    <span class="badge badge-danger">Tắt</span>
-                                @endif
-                                @if($product->is_featured)
-                                    <span class="badge badge-info">Nổi bật</span>
-                                @endif
-                            </div>
-                        </td>
-                        <td>
-                            <div class="flex gap-2">
-                                <a href="{{ route('admin.products.edit', $product->id) }}" class="text-blue-600 hover:text-blue-800 text-sm" title="Chỉnh sửa">
-                                    <i class="fas fa-edit"></i>
-                                </a>
-                                <form method="POST" action="{{ route('admin.products.destroy', $product->id) }}" style="display:inline;" onsubmit="return confirm('Bạn chắc chắn muốn xóa?');">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="text-red-400 hover:text-red-300 text-sm" title="Xóa">
-                                        <i class="fas fa-trash"></i>
-                                    </button>
-                                </form>
-                            </div>
+    <!-- Products Table -->
+    <div class="bg-white rounded-lg shadow overflow-hidden">
+        <table class="w-full">
+            <thead class="bg-gray-100">
+                <tr>
+                    <th class="px-6 py-3 text-left">Tên sản phẩm</th>
+                    <th class="px-6 py-3 text-left">Danh mục</th>
+                    <th class="px-6 py-3 text-left">Giá</th>
+                    <th class="px-6 py-3 text-left">Tồn kho</th>
+                    <th class="px-6 py-3 text-left">Hành động</th>
+                </tr>
+            </thead>
+            <tbody>
+                @forelse($products as $product)
+                    <tr class="border-b hover:bg-gray-50">
+                        <td class="px-6 py-3">{{ $product->name }}</td>
+                        <td class="px-6 py-3">{{ $product->category->name ?? 'N/A' }}</td>
+                        <td class="px-6 py-3">{{ number_format($product->price, 0, ',', '.') }} ₫</td>
+                        <td class="px-6 py-3">{{ $product->stock }}</td>
+                        <td class="px-6 py-3">
+                            <a href="{{ route('admin.products.edit', $product) }}" class="text-blue-600 hover:underline">Sửa</a>
+                            |
+                            <form method="POST" action="{{ route('admin.products.destroy', $product) }}" style="display:inline;" onsubmit="return confirm('Bạn chắc chắn muốn xóa?');">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="text-red-600 hover:underline">Xóa</button>
+                            </form>
                         </td>
                     </tr>
-                    @endforeach
-                </tbody>
-            </table>
-        </div>
+                @empty
+                    <tr>
+                        <td colspan="5" class="px-6 py-3 text-center text-gray-500">Không có sản phẩm nào</td>
+                    </tr>
+                @endforelse
+            </tbody>
+        </table>
+    </div>
 
-        <!-- Pagination -->
-        <div class="px-6 py-4 border-t border-blue-200">
-            {{ $products->links('pagination::tailwind') }}
-        </div>
-    @else
-        <div class="text-center py-12 text-gray-600">
-            <i class="fas fa-inbox text-4xl mb-4 block opacity-50"></i>
-            <p>Không tìm thấy sản phẩm nào</p>
-        </div>
-    @endif
+    <!-- Pagination -->
+    <div class="d-flex justify-content-center">
+        {{ $products->links() }}
+    </div>
 </div>
 @endsection

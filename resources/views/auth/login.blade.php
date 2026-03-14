@@ -1,107 +1,74 @@
-<!DOCTYPE html>
-<html lang="vi">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Đăng Nhập - Quản Lý Agile</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body class="bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 min-h-screen flex items-center justify-center p-4">
-    <div class="w-full max-w-md">
-        <!-- Logo/Header -->
+@extends('layouts.app')
+
+@section('title', 'Đăng nhập - LEMTHAI')
+
+@section('content')
+<div class="min-h-screen flex items-center justify-center py-12 px-4">
+    <div class="max-w-md w-full">
+        <!-- Header -->
         <div class="text-center mb-8">
-            <h1 class="text-4xl font-bold bg-gradient-to-r from-cyan-400 to-purple-500 bg-clip-text text-transparent mb-2">
-                Agile
-            </h1>
-            <p class="text-slate-400">Hệ Thống Quản Lý</p>
+            <div class="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-cyan-400 to-blue-600 rounded-lg mb-4">
+                <span class="text-white font-orbitron font-bold text-2xl">L</span>
+            </div>
+            <h1 class="font-orbitron font-bold text-3xl mb-2 glow-text">LEMTHAI</h1>
+            <p class="text-gray-400">Đăng nhập vào tài khoản của bạn</p>
         </div>
 
-        <!-- Login Card -->
-        <div class="backdrop-blur-xl bg-slate-800/50 border border-slate-700/50 rounded-2xl shadow-2xl p-8">
-            <h2 class="text-2xl font-bold text-white mb-6">Đăng Nhập</h2>
+        <!-- Form -->
+        <form method="POST" action="{{ route('login') }}" class="card-gradient rounded-lg p-8 space-y-6">
+            @csrf
+            <!-- Email -->
+            <div>
+                <label class="block text-sm font-semibold mb-2">Email</label>
+                <input type="email" name="email" required class="w-full bg-gray-800 border border-cyan-500/20 rounded-lg px-4 py-2 focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500/50 text-white" placeholder="your@email.com">
+            </div>
 
-            @if($errors->any())
-                <div class="bg-red-900/20 border border-red-700/50 rounded-lg p-4 mb-6">
-                    <p class="text-red-400 text-sm">{{ $errors->first('email') ?? $errors->first() }}</p>
-                </div>
-            @endif
+            <!-- Password -->
+            <div>
+                <label class="block text-sm font-semibold mb-2">Mật khẩu</label>
+                <input type="password" name="password" required class="w-full bg-gray-800 border border-cyan-500/20 rounded-lg px-4 py-2 focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500/50 text-white" placeholder="••••••••">
+            </div>
 
-            @if(session('error'))
-                <div class="bg-red-900/20 border border-red-700/50 rounded-lg p-4 mb-6">
-                    <p class="text-red-400 text-sm">{{ session('error') }}</p>
-                </div>
-            @endif
-
-            <form action="{{ route('login') }}" method="POST" class="space-y-5">
-                @csrf
-
-                <!-- Email Field -->
-                <div>
-                    <label class="block text-sm font-medium text-slate-300 mb-2">Email</label>
-                    <input
-                        type="email"
-                        name="email"
-                        value="{{ old('email') }}"
-                        required
-                        class="w-full px-4 py-3 bg-slate-700/50 border border-slate-600/50 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:border-cyan-500/50 focus:bg-slate-700/80 transition"
-                        placeholder="admin@example.com"
-                    >
-                </div>
-
-                <!-- Password Field -->
-                <div>
-                    <label class="block text-sm font-medium text-slate-300 mb-2">Mật Khẩu</label>
-                    <input
-                        type="password"
-                        name="password"
-                        required
-                        class="w-full px-4 py-3 bg-slate-700/50 border border-slate-600/50 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:border-cyan-500/50 focus:bg-slate-700/80 transition"
-                        placeholder="Nhập mật khẩu"
-                    >
-                </div>
-
-                <!-- Remember Me -->
-                <label class="flex items-center text-sm text-slate-400 cursor-pointer hover:text-slate-300 transition">
-                    <input type="checkbox" name="remember" class="w-4 h-4 rounded bg-slate-700 border-slate-600 text-cyan-500 cursor-pointer">
-                    <span class="ml-2">Ghi nhớ tôi</span>
+            <!-- Remember Me -->
+            <div class="flex items-center justify-between">
+                <label class="flex items-center">
+                    <input type="checkbox" name="remember" class="w-4 h-4 rounded accent-cyan-400">
+                    <span class="ml-2 text-sm">Ghi nhớ tôi</span>
                 </label>
+                <a href="#" class="text-sm text-cyan-400 hover:text-cyan-300">Quên mật khẩu?</a>
+            </div>
 
-                <!-- Login Button -->
-                <button
-                    type="submit"
-                    class="w-full bg-gradient-to-r from-cyan-500 to-purple-600 hover:from-cyan-600 hover:to-purple-700 text-white font-semibold py-3 rounded-lg transition duration-300 mt-6"
-                >
-                    Đăng Nhập
-                </button>
-            </form>
+            <!-- Submit Button -->
+            <button type="submit" class="w-full btn-primary text-white font-semibold py-3 rounded-lg transition-all hover:shadow-lg" style="background: linear-gradient(135deg, #0066ff, #8b5cf6);">
+                Đăng nhập
+            </button>
 
             <!-- Divider -->
-            <div class="flex items-center gap-4 my-6">
-                <div class="flex-1 h-px bg-slate-700"></div>
-                <span class="text-slate-500 text-sm">hoặc</span>
-                <div class="flex-1 h-px bg-slate-700"></div>
+            <div class="relative my-6">
+                <div class="absolute inset-0 flex items-center">
+                    <div class="w-full border-t border-cyan-500/10"></div>
+                </div>
+                <div class="relative flex justify-center text-sm">
+                    <span class="px-2 bg-gray-900/50 text-gray-400">Hoặc</span>
+                </div>
             </div>
 
-            <!-- Register Link -->
-            <p class="text-center text-slate-400">
-                Chưa có tài khoản?
-                <a href="{{ route('register') }}" class="text-cyan-400 hover:text-cyan-300 font-semibold transition">
-                    Đăng ký ngay
-                </a>
-            </p>
-
-            <!-- Demo Credentials -->
-            <div class="mt-6 p-4 bg-slate-700/30 border border-slate-600/30 rounded-lg">
-                <p class="text-xs text-slate-400 mb-2">📝 Tài khoản demo:</p>
-                <p class="text-xs text-slate-300">Email: <code class="text-cyan-300">admin@lemthai.com</code></p>
-                <p class="text-xs text-slate-300">Password: <code class="text-cyan-300">admin123</code></p>
+            <!-- Social Login -->
+            <div class="space-y-3">
+                <button type="button" class="w-full btn-secondary text-white font-semibold py-2 rounded-lg flex items-center justify-center gap-2" style="border: 1px solid #00f5ff; color: #00f5ff;">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                    </svg>
+                    Google
+                </button>
             </div>
-        </div>
+        </form>
 
-        <!-- Footer -->
-        <p class="text-center text-slate-500 text-sm mt-6">
-            © 2026 Quản Lý Agile. Tất cả quyền được bảo lưu.
+        <!-- Register Link -->
+        <p class="text-center text-gray-400 mt-6">
+            Bạn chưa có tài khoản?
+            <a href="/register" class="text-cyan-400 font-semibold hover:text-cyan-300">Đăng ký ngay</a>
         </p>
     </div>
-</body>
-</html>
+</div>
+@endsection
