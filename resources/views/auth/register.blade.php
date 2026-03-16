@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.auth')
 
 @section('title', 'Đăng ký - LEMTHAI')
 
@@ -7,9 +7,6 @@
     <div class="max-w-md w-full">
         <!-- Header -->
         <div class="text-center mb-8">
-            <div class="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-cyan-400 to-blue-600 rounded-lg mb-4">
-                <span class="text-white font-orbitron font-bold text-2xl">L</span>
-            </div>
             <h1 class="font-orbitron font-bold text-3xl mb-2 glow-text">LEMTHAI</h1>
             <p class="text-gray-400">Tạo tài khoản mới của bạn</p>
         </div>

@@ -311,7 +311,14 @@
             <a href="#" class="nav-link">Shop</a>
             <a href="#" class="nav-link">About</a>
             <a href="#" class="nav-link">Contact</a>
-            <button class="btn-nav">Sign In</button>
+            @auth
+                <form action="{{ route('logout') }}" method="POST" style="display: inline;">
+                    @csrf
+                    <button type="submit" class="btn-nav">Đăng xuất</button>
+                </form>
+            @else
+                <a href="/login" class="btn-nav" style="text-decoration: none;">Đăng nhập</a>
+            @endauth
         </div>
     </nav>
 

@@ -43,7 +43,7 @@
                         <td class="px-6 py-3">{{ $product->name }}</td>
                         <td class="px-6 py-3">{{ $product->category->name ?? 'N/A' }}</td>
                         <td class="px-6 py-3">{{ number_format($product->price, 0, ',', '.') }} ₫</td>
-                        <td class="px-6 py-3">{{ $product->stock }}</td>
+                        <td class="px-6 py-3">{{ $product->quantity_in_stock }}</td>
                         <td class="px-6 py-3">
                             <a href="{{ route('admin.products.edit', $product) }}" class="text-blue-600 hover:underline">Sửa</a>
                             |

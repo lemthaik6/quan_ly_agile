@@ -36,9 +36,6 @@ class LoginController extends Controller
             ->with('error', 'Email hoặc mật khẩu không chính xác');
     }
 
-    /**
-     * Handle user logout
-     */
     public function logout(Request $request)
     {
         Auth::logout();
