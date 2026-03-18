@@ -24,6 +24,7 @@ class Product extends Model
         'quantity_in_stock',
         'sold_count',
         'sku',
+        'image',
         'is_featured',
         'is_active',
     ];

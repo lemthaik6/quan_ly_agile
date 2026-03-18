@@ -9,7 +9,7 @@
     <!-- Form -->
     <div class="lg:col-span-2">
         <div class="card">
-            <form method="POST" action="{{ route('admin.products.update', $product->id) }}" class="space-y-6">
+            <form method="POST" action="{{ route('admin.products.update', $product->id) }}" class="space-y-6" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
 
@@ -33,6 +33,18 @@
                 <div class="input-group">
                     <label for="sku">Mã SKU</label>
                     <input type="text" name="sku" id="sku" value="{{ $product->sku }}" placeholder="Mã SKU (tuỳ chọn)">
+                </div>
+
+                <div class="input-group">
+                    <label for="image">Hình Ảnh Sản Phẩm</label>
+                    @if($product->image)
+                        <div class="mb-3">
+                            <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}" class="h-40 w-40 object-cover rounded-lg border-2 border-cyan-400">
+                            <p class="text-sm text-gray-400 mt-2">Ảnh hiện tại</p>
+                        </div>
+                    @endif
+                    <input type="file" name="image" id="image" accept="image/*" placeholder="Chọn ảnh mới (nếu muốn cập nhật)">
+                    <p class="text-xs text-gray-400 mt-1">Định dạng: JPG, PNG, GIF (Tối đa 2MB)</p>
                 </div>
 
                 <div class="input-group">
@@ -72,6 +84,7 @@
                 <div class="grid grid-cols-2 gap-4">
                     <div class="input-group">
                         <label class="flex items-center gap-2 cursor-pointer">
+                            <input type="hidden" name="is_featured" value="0">
                             <input type="checkbox" name="is_featured" value="1" {{ $product->is_featured ? 'checked' : '' }}>
                             <span>Sản phẩm nổi bật</span>
                         </label>
@@ -79,6 +92,7 @@
 
                     <div class="input-group">
                         <label class="flex items-center gap-2 cursor-pointer">
+                            <input type="hidden" name="is_active" value="0">
                             <input type="checkbox" name="is_active" value="1" {{ $product->is_active ? 'checked' : '' }}>
                             <span>Hoạt động</span>
                         </label>

@@ -35,9 +35,9 @@
             </div>
 
             <div>
-                <label for="cost" class="block text-sm font-semibold mb-2">Giá vốn</label>
-                <input type="number" id="cost" name="cost" value="{{ old('cost') }}" step="0.01" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
-                @error('cost')
+                <label for="cost_price" class="block text-sm font-semibold mb-2">Giá vốn</label>
+                <input type="number" id="cost_price" name="cost_price" value="{{ old('cost_price') }}" step="0.01" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                @error('cost_price')
                     <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
                 @enderror
             </div>
@@ -45,9 +45,9 @@
 
         <div class="grid grid-cols-2 gap-4 mb-4">
             <div>
-                <label for="stock" class="block text-sm font-semibold mb-2">Tồn kho *</label>
-                <input type="number" id="stock" name="stock" value="{{ old('stock') }}" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
-                @error('stock')
+                <label for="quantity_in_stock" class="block text-sm font-semibold mb-2">Tồn kho *</label>
+                <input type="number" id="quantity_in_stock" name="quantity_in_stock" value="{{ old('quantity_in_stock') }}" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                @error('quantity_in_stock')
                     <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
                 @enderror
             </div>
@@ -77,9 +77,18 @@
         </div>
 
         <div class="mb-6">
-            <label for="is_active" class="block text-sm font-semibold mb-2">
+            <label class="flex items-center gap-2 cursor-pointer">
+                <input type="hidden" name="is_featured" value="0">
+                <input type="checkbox" id="is_featured" name="is_featured" value="1" {{ old('is_featured', false) ? 'checked' : '' }} class="mr-2">
+                <span class="text-sm font-semibold">Sản phẩm nổi bật</span>
+            </label>
+        </div>
+
+        <div class="mb-6">
+            <label class="flex items-center gap-2 cursor-pointer">
+                <input type="hidden" name="is_active" value="0">
                 <input type="checkbox" id="is_active" name="is_active" value="1" {{ old('is_active', true) ? 'checked' : '' }} class="mr-2">
-                Sản phẩm hoạt động
+                <span class="text-sm font-semibold">Sản phẩm hoạt động</span>
             </label>
         </div>
 

@@ -7,6 +7,7 @@ use App\Models\Product;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
@@ -64,12 +65,21 @@ class ProductController extends Controller
             'discount_price' => 'nullable|numeric|min:0',
             'quantity_in_stock' => 'required|integer|min:0',
             'sku' => 'nullable|string|max:100|unique:products',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'is_featured' => 'boolean',
             'is_active' => 'boolean',
         ]);
 
         // Tạo slug từ tên
         $validated['slug'] = Str::slug($validated['name']);
+
+        // Xử lý upload ảnh
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $imageName = time() . '_' . Str::random(10) . '.' . $image->getClientOriginalExtension();
+            $image->storeAs('products', $imageName, 'public');
+            $validated['image'] = 'products/' . $imageName;
+        }
 
         Product::create($validated);
 
@@ -101,6 +111,7 @@ class ProductController extends Controller
             'discount_price' => 'nullable|numeric|min:0',
             'quantity_in_stock' => 'required|integer|min:0',
             'sku' => 'nullable|string|max:100|unique:products,sku,' . $product->id,
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'is_featured' => 'boolean',
             'is_active' => 'boolean',
         ]);
@@ -108,6 +119,19 @@ class ProductController extends Controller
         // Cập nhật slug nếu tên thay đổi
         if ($product->name !== $validated['name']) {
             $validated['slug'] = Str::slug($validated['name']);
+        }
+
+        // Xử lý upload ảnh mới
+        if ($request->hasFile('image')) {
+            // Xóa ảnh cũ nếu có
+            if ($product->image && Storage::disk('public')->exists($product->image)) {
+                Storage::disk('public')->delete($product->image);
+            }
+            
+            $image = $request->file('image');
+            $imageName = time() . '_' . Str::random(10) . '.' . $image->getClientOriginalExtension();
+            $image->storeAs('products', $imageName, 'public');
+            $validated['image'] = 'products/' . $imageName;
         }
 
         $product->update($validated);
@@ -121,6 +145,11 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
+        // Xóa ảnh nếu có
+        if ($product->image && Storage::disk('public')->exists($product->image)) {
+            Storage::disk('public')->delete($product->image);
+        }
+
         $product->delete();
 
         return redirect()->route('admin.products.index')

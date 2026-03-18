@@ -28,6 +28,7 @@
 
         <div class="mb-6">
             <label for="is_active" class="block text-sm font-semibold mb-2">
+                <input type="hidden" name="is_active" value="0">
                 <input type="checkbox" id="is_active" name="is_active" value="1" {{ old('is_active', $category->is_active) ? 'checked' : '' }} class="mr-2">
                 Hoạt động
             </label>
