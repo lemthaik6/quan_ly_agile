@@ -11,37 +11,83 @@
             <p class="text-gray-400">Tạo tài khoản mới của bạn</p>
         </div>
 
+        <!-- Success Messages -->
+        @if (session('success'))
+            <div class="mb-6 p-4 bg-green-500/10 border border-green-500/50 rounded-lg">
+                <div class="flex items-center gap-3">
+                    <svg class="w-5 h-5 text-green-400 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                    </svg>
+                    <span class="text-green-300 font-semibold">{{ session('success') }}</span>
+                </div>
+            </div>
+        @endif
+
+        <!-- Error Messages -->
+        @if ($errors->any())
+            <div class="mb-6 p-4 bg-red-500/10 border border-red-500/50 rounded-lg">
+                <div class="flex items-start gap-3">
+                    <svg class="w-5 h-5 text-red-400 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/>
+                    </svg>
+                    <div class="flex-1">
+                        <h3 class="text-red-400 font-semibold mb-2">Lỗi xác thực</h3>
+                        <ul class="text-red-300 text-sm space-y-1">
+                            @foreach ($errors->all() as $error)
+                                <li>• {{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        @endif
+
         <!-- Form -->
         <form method="POST" action="{{ route('register') }}" class="card-gradient rounded-lg p-8 space-y-4">
             @csrf
             <!-- Name -->
             <div>
                 <label class="block text-sm font-semibold mb-2">Họ tên</label>
-                <input type="text" name="name" required class="w-full bg-gray-800 border border-cyan-500/20 rounded-lg px-4 py-2 focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500/50 text-white" placeholder="Nhập họ tên">
+                <input type="text" name="name" value="{{ old('name') }}" required class="w-full bg-gray-800 border {{ $errors->has('name') ? 'border-red-500' : 'border-cyan-500/20' }} rounded-lg px-4 py-2 focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500/50 text-white" placeholder="Nhập họ tên">
+                @error('name')
+                    <p class="text-red-400 text-sm mt-1">{{ $message }}</p>
+                @enderror
             </div>
 
             <!-- Email -->
             <div>
                 <label class="block text-sm font-semibold mb-2">Email</label>
-                <input type="email" name="email" required class="w-full bg-gray-800 border border-cyan-500/20 rounded-lg px-4 py-2 focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500/50 text-white" placeholder="your@email.com">
+                <input type="email" name="email" value="{{ old('email') }}" required class="w-full bg-gray-800 border {{ $errors->has('email') ? 'border-red-500' : 'border-cyan-500/20' }} rounded-lg px-4 py-2 focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500/50 text-white" placeholder="your@email.com">
+                @error('email')
+                    <p class="text-red-400 text-sm mt-1">{{ $message }}</p>
+                @enderror
             </div>
 
             <!-- Phone -->
             <div>
                 <label class="block text-sm font-semibold mb-2">Số điện thoại</label>
-                <input type="tel" name="phone" class="w-full bg-gray-800 border border-cyan-500/20 rounded-lg px-4 py-2 focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500/50 text-white" placeholder="+84 9xx xxx xxx">
+                <input type="tel" name="phone" value="{{ old('phone') }}" class="w-full bg-gray-800 border {{ $errors->has('phone') ? 'border-red-500' : 'border-cyan-500/20' }} rounded-lg px-4 py-2 focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500/50 text-white" placeholder="+84 9xx xxx xxx">
+                @error('phone')
+                    <p class="text-red-400 text-sm mt-1">{{ $message }}</p>
+                @enderror
             </div>
 
             <!-- Password -->
             <div>
                 <label class="block text-sm font-semibold mb-2">Mật khẩu</label>
-                <input type="password" name="password" required class="w-full bg-gray-800 border border-cyan-500/20 rounded-lg px-4 py-2 focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500/50 text-white" placeholder="••••••••">
+                <input type="password" name="password" required class="w-full bg-gray-800 border {{ $errors->has('password') ? 'border-red-500' : 'border-cyan-500/20' }} rounded-lg px-4 py-2 focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500/50 text-white" placeholder="••••••••">
+                @error('password')
+                    <p class="text-red-400 text-sm mt-1">{{ $message }}</p>
+                @enderror
             </div>
 
             <!-- Confirm Password -->
             <div>
                 <label class="block text-sm font-semibold mb-2">Xác nhận mật khẩu</label>
-                <input type="password" name="password_confirmation" required class="w-full bg-gray-800 border border-cyan-500/20 rounded-lg px-4 py-2 focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500/50 text-white" placeholder="••••••••">
+                <input type="password" name="password_confirmation" required class="w-full bg-gray-800 border {{ $errors->has('password_confirmation') ? 'border-red-500' : 'border-cyan-500/20' }} rounded-lg px-4 py-2 focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500/50 text-white" placeholder="••••••••">
+                @error('password_confirmation')
+                    <p class="text-red-400 text-sm mt-1">{{ $message }}</p>
+                @enderror
             </div>
 
             <!-- Terms -->
