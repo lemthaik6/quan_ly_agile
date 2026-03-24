@@ -7,6 +7,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use App\Models\OrderItem;
+use App\Models\ProductColor;
+use App\Models\ProductSize;
+use App\Models\Review;
 
 class Product extends Model
 {
@@ -51,5 +54,45 @@ class Product extends Model
     public function orderItems(): HasMany
     {
         return $this->hasMany(OrderItem::class);
+    }
+
+    /**
+     * Get all colors available for this product
+     */
+    public function colors(): HasMany
+    {
+        return $this->hasMany(ProductColor::class);
+    }
+
+    /**
+     * Get all sizes available for this product
+     */
+    public function sizes(): HasMany
+    {
+        return $this->hasMany(ProductSize::class);
+    }
+
+    /**
+     * Get all reviews for this product
+     */
+    public function reviews(): HasMany
+    {
+        return $this->hasMany(Review::class);
+    }
+
+    /**
+     * Get average rating for this product
+     */
+    public function getAverageRatingAttribute(): float
+    {
+        return $this->reviews()->where('is_verified_purchase', true)->avg('rating') ?? 0;
+    }
+
+    /**
+     * Get review count for this product
+     */
+    public function getReviewCountAttribute(): int
+    {
+        return $this->reviews()->where('is_verified_purchase', true)->count();
     }
 }

@@ -116,5 +116,8 @@ class DatabaseSeeder extends Seeder
         foreach ($products as $product) {
             Product::create($product);
         }
+
+        // Run ProductSeeder for sample data with colors, sizes, and reviews
+        $this->call(ProductSeeder::class);
     }
 }

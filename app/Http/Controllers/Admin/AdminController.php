@@ -114,9 +114,6 @@ class AdminController extends Controller
         ));
     }
 
-    /**
-     * Lấy tên tháng từ số
-     */
     private function getMonthName($month)
     {
         $months = [
