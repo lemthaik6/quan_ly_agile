@@ -1,82 +1,53 @@
 @extends('layouts.admin')
 
-@section('title', 'Thêm danh mục')
+@section('title', 'Thêm Danh Mục')
 @section('page-title', 'Thêm Danh Mục Mới')
-@section('page-subtitle', 'Tạo một danh mục sản phẩm mới')
+@section('page-subtitle', 'Tạo danh mục cho sản phẩm')
 
 @section('content')
-<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-    <div class="lg:col-span-2">
-        <div class="card">
-            <form method="POST" action="{{ route('admin.categories.store') }}" class="space-y-6">
-                @csrf
+<div style="max-width: 600px; margin: 0 auto;">
+    <form method="POST" action="{{ route('admin.categories.store') }}" style="display: flex; flex-direction: column; gap: var(--sp-2xl);">
+        @csrf
 
-                <div class="input-group">
-                    <label for="name">Tên Danh Mục <span class="text-red-400">*</span></label>
-                    <input type="text" name="name" id="name" placeholder="Nhập tên danh mục" required>
+        <div class="panel" style="padding: var(--sp-xl);">
+            <div style="display: flex; flex-direction: column; gap: var(--sp-lg);">
+                <div>
+                    <label for="name">Tên Danh Mục <span style="color: var(--error);">*</span></label>
+                    <input type="text" id="name" name="name" value="{{ old('name') }}" required placeholder="Nhập tên danh mục...">
+                    @error('name')
+                        <p style="color: var(--error); font-size: 12px; margin-top: 4px;">{{ $message }}</p>
+                    @enderror
                 </div>
 
-                <div class="input-group">
+                <div>
                     <label for="description">Mô Tả</label>
-                    <textarea name="description" id="description" rows="4" placeholder="Mô tả danh mục (tuỳ chọn)"></textarea>
+                    <textarea id="description" name="description" rows="4" placeholder="Mô tả danh mục...">{{ old('description') }}</textarea>
+                    @error('description')
+                        <p style="color: var(--error); font-size: 12px; margin-top: 4px;">{{ $message }}</p>
+                    @enderror
                 </div>
 
-                <div class="input-group">
-                    <label for="display_order">Thứ Tự Hiển Thị</label>
-                    <input type="number" name="display_order" id="display_order" placeholder="0" min="0" value="0">
-                </div>
-
-                <div class="input-group">
-                    <label class="flex items-center gap-2 cursor-pointer">
-                        <input type="hidden" name="is_active" value="0">
-                        <input type="checkbox" name="is_active" value="1" checked>
-                        <span>Hoạt động</span>
-                    </label>
-                </div>
-
-                <div class="flex gap-4">
-                    <button type="submit" class="btn-primary">
-                        <i class="fas fa-save mr-2"></i> Tạo Danh Mục
-                    </button>
-                    <a href="{{ route('admin.categories.index') }}" class="btn-secondary">
-                        <i class="fas fa-times mr-2"></i> Hủy
-                    </a>
-                </div>
-            </form>
-        </div>
-    </div>
-
-    <div>
-        <div class="card">
-            <h3 class="text-lg font-orbitron font-bold text-cyan-400 mb-4">Hướng Dẫn</h3>
-            <div class="space-y-4 text-sm text-gray-300">
-                <div>
-                    <strong class="text-cyan-400">Tên Danh Mục:</strong>
-                    <p>Tên phân loại sản phẩm (vd: Điện tử, Thời trang...)</p>
-                </div>
-                <div>
-                    <strong class="text-cyan-400">Mô Tả:</strong>
-                    <p>Mô tả chi tiết danh mục để giúp khách hiểu rõ hơn.</p>
-                </div>
-                <div>
-                    <strong class="text-cyan-400">Thứ Tự Hiển Thị:</strong>
-                    <p>Số nhỏ hơn sẽ hiển thị trước (0, 1, 2...).</p>
-                </div>
-                <div>
-                    <strong class="text-cyan-400">Hoạt Động:</strong>
-                    <p>Bật để danh mục xuất hiện trên website.</p>
-                </div>
+                <label style="display: flex; align-items: center; gap: var(--sp-lg); cursor: pointer; padding: var(--sp-lg); background: linear-gradient(90deg, rgba(0,212,255,0.05), transparent); border-radius: var(--radius-md); border: var(--border-thin); transition: all 0.3s;">
+                    <input type="hidden" name="is_active" value="0">
+                    <input type="checkbox" name="is_active" value="1" {{ old('is_active', true) ? 'checked' : '' }} style="width: 18px; height: 18px; cursor: pointer;">
+                    <div>
+                        <p style="margin: 0; font-weight: 600; color: var(--text-primary);">Danh Mục Hoạt Động</p>
+                        <p style="margin: 4px 0 0 0; font-size: 12px; color: var(--text-muted);">Danh mục sẽ hiển thị trên cửa hàng</p>
+                    </div>
+                </label>
             </div>
         </div>
-    </div>
-</div>
-@endsection
 
-@section('extra-js')
-<script>
-    // Auto generate slug from name
-    document.getElementById('name').addEventListener('change', function() {
-        const slug = this.value.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
-    });
-</script>
+        <div style="display: flex; gap: var(--sp-lg); justify-content: flex-end;">
+            <a href="{{ route('admin.categories.index') }}" class="btn btn-secondary">
+                <i class="fas fa-times"></i>
+                <span>Hủy</span>
+            </a>
+            <button type="submit" class="btn btn-primary">
+                <i class="fas fa-check"></i>
+                <span>Tạo Danh Mục</span>
+            </button>
+        </div>
+    </form>
+</div>
 @endsection

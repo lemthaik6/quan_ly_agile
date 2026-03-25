@@ -1,101 +1,174 @@
 @extends('layouts.admin')
 
 @section('title', 'Thêm Sản Phẩm Mới')
+@section('page-title', 'Thêm Sản Phẩm Mới')
+@section('page-subtitle', 'Tạo sản phẩm mới cho kho hàng')
 
 @section('content')
-<div class="max-w-2xl mx-auto">
-    <h1 class="text-3xl font-bold mb-6">Thêm Sản Phẩm Mới</h1>
-    
-    <form method="POST" action="{{ route('admin.products.store') }}" enctype="multipart/form-data" class="bg-white p-6 rounded-lg shadow">
+<div style="max-width: 900px; margin: 0 auto;">
+    <form method="POST" action="{{ route('admin.products.store') }}" enctype="multipart/form-data" style="display: flex; flex-direction: column; gap: var(--sp-2xl);">
         @csrf
-        
-        <div class="mb-4">
-            <label for="name" class="block text-sm font-semibold mb-2">Tên sản phẩm *</label>
-            <input type="text" id="name" name="name" value="{{ old('name') }}" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
-            @error('name')
-                <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
-            @enderror
-        </div>
 
-        <div class="mb-4">
-            <label for="description" class="block text-sm font-semibold mb-2">Mô tả</label>
-            <textarea id="description" name="description" rows="4" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">{{ old('description') }}</textarea>
-            @error('description')
-                <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
-            @enderror
-        </div>
+        <!-- Basic Information Section -->
+        <div class="panel" style="padding: var(--sp-xl);">
+            <h3 style="margin: 0 0 var(--sp-xl) 0; font-size: 16px; font-weight: 600;">Thông Tin Cơ Bản</h3>
 
-        <div class="grid grid-cols-2 gap-4 mb-4">
-            <div>
-                <label for="price" class="block text-sm font-semibold mb-2">Giá bán *</label>
-                <input type="number" id="price" name="price" value="{{ old('price') }}" step="0.01" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
-                @error('price')
-                    <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
-                @enderror
-            </div>
+            <div style="display: flex; flex-direction: column; gap: var(--sp-lg);">
+                <div>
+                    <label for="name">Tên Sản Phẩm <span style="color: var(--error);">*</span></label>
+                    <input type="text" id="name" name="name" value="{{ old('name') }}" required placeholder="Nhập tên sản phẩm...">
+                    @error('name')
+                        <p style="color: var(--error); font-size: 12px; margin-top: 4px;">{{ $message }}</p>
+                    @enderror
+                </div>
 
-            <div>
-                <label for="cost_price" class="block text-sm font-semibold mb-2">Giá vốn</label>
-                <input type="number" id="cost_price" name="cost_price" value="{{ old('cost_price') }}" step="0.01" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
-                @error('cost_price')
-                    <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
-                @enderror
-            </div>
-        </div>
+                <div>
+                    <label for="description">Mô Tả</label>
+                    <textarea id="description" name="description" rows="4" placeholder="Mô tả chi tiết sản phẩm...">{{ old('description') }}</textarea>
+                    @error('description')
+                        <p style="color: var(--error); font-size: 12px; margin-top: 4px;">{{ $message }}</p>
+                    @enderror
+                </div>
 
-        <div class="grid grid-cols-2 gap-4 mb-4">
-            <div>
-                <label for="quantity_in_stock" class="block text-sm font-semibold mb-2">Tồn kho *</label>
-                <input type="number" id="quantity_in_stock" name="quantity_in_stock" value="{{ old('quantity_in_stock') }}" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
-                @error('quantity_in_stock')
-                    <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
-                @enderror
-            </div>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: var(--sp-lg);">
+                    <div>
+                        <label for="category_id">Danh Mục <span style="color: var(--error);">*</span></label>
+                        <select id="category_id" name="category_id" required>
+                            <option value="">-- Chọn danh mục --</option>
+                            @foreach($categories as $category)
+                                <option value="{{ $category->id }}" {{ old('category_id') == $category->id ? 'selected' : '' }}>
+                                    {{ $category->name }}
+                                </option>
+                            @endforeach
+                        </select>
+                        @error('category_id')
+                            <p style="color: var(--error); font-size: 12px; margin-top: 4px;">{{ $message }}</p>
+                        @enderror
+                    </div>
 
-            <div>
-                <label for="category_id" class="block text-sm font-semibold mb-2">Danh mục *</label>
-                <select id="category_id" name="category_id" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
-                    <option value="">-- Chọn danh mục --</option>
-                    @foreach($categories as $category)
-                        <option value="{{ $category->id }}" {{ old('category_id') == $category->id ? 'selected' : '' }}>
-                            {{ $category->name }}
-                        </option>
-                    @endforeach
-                </select>
-                @error('category_id')
-                    <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
-                @enderror
+                    <div>
+                        <label for="unit">Đơn Vị Tính</label>
+                        <input type="text" id="unit" name="unit" value="{{ old('unit', 'cái') }}" placeholder="cái, bộ, hộp...">
+                    </div>
+                </div>
             </div>
         </div>
 
-        <div class="mb-4">
-            <label for="image" class="block text-sm font-semibold mb-2">Hình ảnh</label>
-            <input type="file" id="image" name="image" accept="image/*" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
-            @error('image')
-                <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
-            @enderror
+        <!-- Pricing & Inventory -->
+        <div class="panel" style="padding: var(--sp-xl);">
+            <h3 style="margin: 0 0 var(--sp-xl) 0; font-size: 16px; font-weight: 600;">Giá & Tồn Kho</h3>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: var(--sp-lg);">
+                <div>
+                    <label for="price">Giá Bán <span style="color: var(--error);">*</span></label>
+                    <input type="number" id="price" name="price" value="{{ old('price') }}" step="0.01" required placeholder="0">
+                    @error('price')
+                        <p style="color: var(--error); font-size: 12px; margin-top: 4px;">{{ $message }}</p>
+                    @enderror
+                </div>
+
+                <div>
+                    <label for="cost_price">Giá Vốn</label>
+                    <input type="number" id="cost_price" name="cost_price" value="{{ old('cost_price') }}" step="0.01" placeholder="0">
+                    @error('cost_price')
+                        <p style="color: var(--error); font-size: 12px; margin-top: 4px;">{{ $message }}</p>
+                    @enderror
+                </div>
+
+                <div>
+                    <label for="quantity_in_stock">Tồn Kho <span style="color: var(--error);">*</span></label>
+                    <input type="number" id="quantity_in_stock" name="quantity_in_stock" value="{{ old('quantity_in_stock', 0) }}" required placeholder="0">
+                    @error('quantity_in_stock')
+                        <p style="color: var(--error); font-size:12px; margin-top: 4px;">{{ $message }}</p>
+                    @enderror
+                </div>
+            </div>
         </div>
 
-        <div class="mb-6">
-            <label class="flex items-center gap-2 cursor-pointer">
-                <input type="hidden" name="is_featured" value="0">
-                <input type="checkbox" id="is_featured" name="is_featured" value="1" {{ old('is_featured', false) ? 'checked' : '' }} class="mr-2">
-                <span class="text-sm font-semibold">Sản phẩm nổi bật</span>
-            </label>
+        <!-- Image & Media -->
+        <div class="panel" style="padding: var(--sp-xl);">
+            <h3 style="margin: 0 0 var(--sp-xl) 0; font-size: 16px; font-weight: 600;">Hình Ảnh</h3>
+
+            <div>
+                <label for="image">Tải Lên Hình Ảnh</label>
+                <div style="border: 2px dashed var(--border-glow); border-radius: var(--radius-lg); padding: var(--sp-2xl); text-align: center; cursor: pointer; transition: all 0.3s; background: linear-gradient(135deg, rgba(0,212,255,0.05), rgba(0,212,255,0.02));">
+                    <input type="file" id="image" name="image" accept="image/*" style="display: none;" onchange="previewImage(event)">
+                    <i class="fas fa-cloud-upload-alt" style="font-size: 32px; color: var(--laser-blue); margin-bottom: var(--sp-md); display: block;"></i>
+                    <p style="margin: 0 0 var(--sp-sm) 0; font-weight: 600;">Click để chọn hoặc kéo thả hình ảnh</p>
+                    <p style="margin: 0; font-size: 12px; color: var(--text-muted);">JPG, PNG, WebP - Tối đa 10MB</p>
+                </div>
+                <div id="image-preview" style="margin-top: var(--sp-lg); display: none;">
+                    <img id="preview-img" src="" alt="Preview" style="max-width: 200px; border-radius: var(--radius-lg); border: var(--border-light);">
+                </div>
+                @error('image')
+                    <p style="color: var(--error); font-size: 12px; margin-top: 4px;">{{ $message }}</p>
+                @enderror
+            </div>
         </div>
 
-        <div class="mb-6">
-            <label class="flex items-center gap-2 cursor-pointer">
-                <input type="hidden" name="is_active" value="0">
-                <input type="checkbox" id="is_active" name="is_active" value="1" {{ old('is_active', true) ? 'checked' : '' }} class="mr-2">
-                <span class="text-sm font-semibold">Sản phẩm hoạt động</span>
-            </label>
+        <!-- Settings -->
+        <div class="panel" style="padding: var(--sp-xl);">
+            <h3 style="margin: 0 0 var(--sp-xl) 0; font-size: 16px; font-weight: 600;">Cấu Hình</h3>
+
+            <div style="display: flex; flex-direction: column; gap: var(--sp-lg);">
+                <label style="display: flex; align-items: center; gap: var(--sp-lg); cursor: pointer; padding: var(--sp-lg); background: linear-gradient(90deg, rgba(0,212,255,0.05), transparent); border-radius: var(--radius-md); border: var(--border-thin); transition: all 0.3s;">
+                    <input type="hidden" name="is_active" value="0">
+                    <input type="checkbox" name="is_active" value="1" {{ old('is_active', true) ? 'checked' : '' }} style="width: 18px; height: 18px; cursor: pointer;">
+                    <div>
+                        <p style="margin: 0; font-weight: 600; color: var(--text-primary);">Sản Phẩm Hoạt Động</p>
+                        <p style="margin: 4px 0 0 0; font-size: 12px; color: var(--text-muted);">Sản phẩm sẽ hiển thị trên cửa hàng</p>
+                    </div>
+                </label>
+
+                <label style="display: flex; align-items: center; gap: var(--sp-lg); cursor: pointer; padding: var(--sp-lg); background: linear-gradient(90deg, rgba(139,92,246,0.05), transparent); border-radius: var(--radius-md); border: var(--border-thin); transition: all 0.3s;">
+                    <input type="hidden" name="is_featured" value="0">
+                    <input type="checkbox" name="is_featured" value="1" {{ old('is_featured', false) ? 'checked' : '' }} style="width: 18px; height: 18px; cursor: pointer;">
+                    <div>
+                        <p style="margin: 0; font-weight: 600; color: var(--text-primary);">Sản Phẩm Nổi Bật</p>
+                        <p style="margin: 4px 0 0 0; font-size: 12px; color: var(--text-muted);">Xuất hiện trong trang chủ và danh sách nổi bật</p>
+                    </div>
+                </label>
+            </div>
         </div>
 
-        <div class="flex gap-4">
-            <button type="submit" class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">Tạo sản phẩm</button>
-            <a href="{{ route('admin.products.index') }}" class="px-6 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700">Hủy</a>
+        <!-- Actions -->
+        <div style="display: flex; gap: var(--sp-lg); justify-content: flex-end;">
+            <a href="{{ route('admin.products.index') }}" class="btn btn-secondary">
+                <i class="fas fa-times"></i>
+                <span>Hủy</span>
+            </a>
+            <button type="submit" class="btn btn-primary">
+                <i class="fas fa-check"></i>
+                <span>Tạo Sản Phẩm</span>
+            </button>
         </div>
     </form>
 </div>
+
+<script>
+    function previewImage(event) {
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                document.getElementById('preview-img').src = e.target.result;
+                document.getElementById('image-preview').style.display = 'block';
+            };
+            reader.readAsDataURL(file);
+        }
+    }
+
+    // Drag & drop
+    const dropZone = document.querySelector('[style*="border: 2px dashed"]');
+    if (dropZone) {
+        dropZone.addEventListener('click', () => document.getElementById('image').click());
+        dropZone.addEventListener('dragover', (e) => { e.preventDefault(); dropZone.style.borderColor = 'var(--laser-blue)'; });
+        dropZone.addEventListener('dragleave', () => { dropZone.style.borderColor = 'rgba(0,212,255,0.2)'; });
+        dropZone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            document.getElementById('image').files = e.dataTransfer.files;
+            previewImage({ target: { files: e.dataTransfer.files } });
+        });
+    }
+</script>
 @endsection
