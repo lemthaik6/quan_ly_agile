@@ -68,8 +68,8 @@ class OrderController extends Controller
             'shipping_fee' => $shippingFee,
             'discount_amount' => $discountAmount,
             'final_amount' => $finalAmount,
-            'order_status' => 'pending',
-            'payment_status' => $request->payment_method === 'cod' ? 'unpaid' : 'pending',
+            'order_status' => 'dang_cho',
+            'payment_status' => $request->payment_method === 'cod' ? 'chua_thanh_toan' : 'dang_xu_ly',
             'payment_method' => $request->payment_method,
             'shipping_address' => $request->address,
             'shipping_city' => $request->city,
@@ -97,7 +97,7 @@ class OrderController extends Controller
         // Create initial order tracking
         OrderTracking::create([
             'order_id' => $order->id,
-            'status' => 'pending',
+            'status' => 'dang_cho',
             'description' => 'Đơn hàng của bạn đã được tạo thành công',
         ]);
 
