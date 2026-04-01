@@ -39,9 +39,9 @@
                         <!-- Payment Status -->
                         <div>
                             <div style="font-size: 12px; color: #808090; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px;">Thanh Toán</div>
-                            @if($order->payment_status === 'paid')
+                            @if($order->payment_status === 'hoan_thanh')
                                 <span style="background: linear-gradient(135deg, rgba(16,185,129,0.2), rgba(16,185,129,0.1)); color: #86efac; padding: 6px 12px; border-radius: 6px; font-size: 12px; font-weight: 600;display: inline-block;">✓ Đã Thanh Toán</span>
-                            @elseif($order->payment_status === 'pending')
+                            @elseif($order->payment_status === 'dang_xu_ly')
                                 <span style="background: linear-gradient(135deg, rgba(234,179,8,0.2), rgba(234,179,8,0.1)); color: #fde047; padding: 6px 12px; border-radius: 6px; font-size: 12px; font-weight: 600;display: inline-block;">⏳ Chờ Xử Lý</span>
                             @else
                                 <span style="background: linear-gradient(135deg, rgba(239,68,68,0.2), rgba(239,68,68,0.1)); color: #fca5a5; padding: 6px 12px; border-radius: 6px; font-size: 12px; font-weight: 600;display: inline-block;">✗ Chưa Thanh Toán</span>
@@ -51,14 +51,14 @@
                         <!-- Order Status -->
                         <div>
                             <div style="font-size: 12px; color: #808090; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px;">Trạng Thái</div>
-                            @if($order->order_status === 'completed')
-                                <span style="background: linear-gradient(135deg, rgba(16,185,129,0.2), rgba(16,185,129,0.1)); color: #86efac; padding: 6px 12px; border-radius: 6px; font-size: 12px; font-weight: 600; display: inline-block;">✓ Hoàn Thành</span>
-                            @elseif($order->order_status === 'shipped')
+                            @if($order->order_status === 'da_giao')
+                                <span style="background: linear-gradient(135deg, rgba(16,185,129,0.2), rgba(16,185,129,0.1)); color: #86efac; padding: 6px 12px; border-radius: 6px; font-size: 12px; font-weight: 600; display: inline-block;">✓ Đã Giao</span>
+                            @elseif($order->order_status === 'dang_giao')
                                 <span style="background: linear-gradient(135deg, rgba(59,130,246,0.2), rgba(59,130,246,0.1)); color: #93c5fd; padding: 6px 12px; border-radius: 6px; font-size: 12px; font-weight: 600;display: inline-block;">📦 Đang Giao</span>
-                            @elseif($order->order_status === 'cancelled')
-                                <span style="background: linear-gradient(135deg, rgba(239,68,68,0.2), rgba(239,68,68,0.1)); color: #fca5a5; padding: 6px 12px; border-radius: 6px; font-size: 12px; font-weight: 600;display: inline-block;">✗ Hủy</span>
+                            @elseif($order->order_status === 'da_huy')
+                                <span style="background: linear-gradient(135deg, rgba(239,68,68,0.2), rgba(239,68,68,0.1)); color: #fca5a5; padding: 6px 12px; border-radius: 6px; font-size: 12px; font-weight: 600;display: inline-block;">✗ Đã Hủy</span>
                             @else
-                                <span style="background: linear-gradient(135deg, rgba(0,212,255,0.2), rgba(0,212,255,0.1)); color: #00d4ff; padding: 6px 12px; border-radius: 6px; font-size: 12px; font-weight: 600;display: inline-block;">⏳ Xử Lý</span>
+                                <span style="background: linear-gradient(135deg, rgba(0,212,255,0.2), rgba(0,212,255,0.1)); color: #00d4ff; padding: 6px 12px; border-radius: 6px; font-size: 12px; font-weight: 600;display: inline-block;">⏳ Đang Xử Lý</span>
                             @endif
                         </div>
 

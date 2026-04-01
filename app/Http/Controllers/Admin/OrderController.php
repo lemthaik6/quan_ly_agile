@@ -51,7 +51,7 @@ class OrderController extends Controller
      */
     public function show(Order $order)
     {
-        $order->load(['user', 'items', 'tracking']);
+        $order->load(['user', 'orderItems', 'trackings']);
         return view('admin.orders.show', compact('order'));
     }
 
@@ -61,7 +61,7 @@ class OrderController extends Controller
     public function updateStatus(Request $request, Order $order)
     {
         $validated = $request->validate([
-            'order_status' => 'required|in:dang_cho,da_xac_nhan,dang_xu_ly,da_gui,da_giao,da_huy',
+            'order_status' => 'required|in:dang_cho,dang_xu_ly,dang_giao,da_giao,da_huy',
             'description' => 'nullable|string|max:255',
         ]);
 
@@ -84,7 +84,7 @@ class OrderController extends Controller
     public function updatePaymentStatus(Request $request, Order $order)
     {
         $validated = $request->validate([
-            'payment_status' => 'required|in:dang_cho,hoan_thanh,that_bai,hoan_tien',
+            'payment_status' => 'required|in:dang_cho,chua_thanh_toan,dang_xu_ly,hoan_thanh,that_bai',
         ]);
 
         $order->update(['payment_status' => $validated['payment_status']]);

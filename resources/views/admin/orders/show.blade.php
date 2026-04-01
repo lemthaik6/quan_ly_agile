@@ -18,14 +18,11 @@
                 @case('dang_cho')
                     <span class="badge badge-warning" style="padding: 8px 12px; font-size: 12px;">Chờ xác nhận</span>
                     @break
-                @case('da_xac_nhan')
-                    <span class="badge badge-info" style="padding: 8px 12px; font-size: 12px;">Đã xác nhận</span>
-                    @break
                 @case('dang_xu_ly')
                     <span class="badge badge-info" style="padding: 8px 12px; font-size: 12px;">Đang xử lý</span>
                     @break
-                @case('da_gui')
-                    <span class="badge badge-info" style="padding: 8px 12px; font-size: 12px;">Đã gửi</span>
+                @case('dang_giao')
+                    <span class="badge badge-info" style="padding: 8px 12px; font-size: 12px;">Đang giao</span>
                     @break
                 @case('da_giao')
                     <span class="badge badge-success" style="padding: 8px 12px; font-size: 12px;">Đã giao</span>
@@ -189,14 +186,11 @@
                             @case('dang_cho')
                                 <span class="badge badge-warning">Chờ xác nhận</span>
                                 @break
-                            @case('da_xac_nhan')
-                                <span class="badge badge-info">Đã xác nhận</span>
-                                @break
                             @case('dang_xu_ly')
                                 <span class="badge badge-info">Đang xử lý</span>
                                 @break
-                            @case('da_gui')
-                                <span class="badge badge-info">Đã gửi</span>
+                            @case('dang_giao')
+                                <span class="badge badge-info">Đang giao</span>
                                 @break
                             @case('da_giao')
                                 <span class="badge badge-success">Đã giao</span>
@@ -283,19 +277,17 @@
             </div>
 
             <!-- Status Update Form (Hidden) -->
-            <form id="toggle-order-status" style="display: none;" class="panel" style="padding: var(--sp-xl);">
+            <form id="toggle-order-status" style="display: none;" class="panel" style="padding: var(--sp-xl);" action="{{ route('admin.orders.update-status', $order->id) }}" method="POST">
                 @csrf
-                @method('PATCH')
                 <select name="order_status" style="width: 100%; margin-bottom: var(--sp-lg);">
                     <option value="">Chọn trạng thái</option>
                     <option value="dang_cho">Chờ xác nhận</option>
-                    <option value="da_xac_nhan">Đã xác nhận</option>
                     <option value="dang_xu_ly">Đang xử lý</option>
-                    <option value="da_gui">Đã gửi</option>
+                    <option value="dang_giao">Đang giao</option>
                     <option value="da_giao">Đã giao</option>
                     <option value="da_huy">Đã hủy</option>
                 </select>
-                <textarea name="tracking_note" placeholder="Ghi chú..." style="width: 100%; height: 80px; padding: var(--sp-md); background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; color: var(--text-primary); margin-bottom: var(--sp-lg);"></textarea>
+                <textarea name="description" placeholder="Ghi chú..." style="width: 100%; height: 80px; padding: var(--sp-md); background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; color: var(--text-primary); margin-bottom: var(--sp-lg);"></textarea>
                 <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center;">
                     <i class="fas fa-check"></i>
                     <span>Lưu</span>
@@ -303,16 +295,15 @@
             </form>
 
             <!-- Payment Status Form (Hidden) -->
-            <form id="toggle-payment-status" style="display: none;" class="panel" style="padding: var(--sp-xl);">
+            <form id="toggle-payment-status" style="display: none;" class="panel" style="padding: var(--sp-xl);" action="{{ route('admin.orders.update-payment-status', $order->id) }}" method="POST">
                 @csrf
-                @method('PATCH')
                 <select name="payment_status" style="width: 100%; margin-bottom: var(--sp-lg);">
                     <option value="">Chọn trạng thái</option>
                     <option value="dang_cho">Chờ thanh toán</option>
                     <option value="hoan_thanh">Đã thanh toán</option>
                     <option value="that_bai">Thanh toán lỗi</option>
                 </select>
-                <textarea name="payment_note" placeholder="Ghi chú..." style="width: 100%; height: 80px; padding: var(--sp-md); background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; color: var(--text-primary); margin-bottom: var(--sp-lg);"></textarea>
+                <textarea name="description" placeholder="Ghi chú..." style="width: 100%; height: 80px; padding: var(--sp-md); background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; color: var(--text-primary); margin-bottom: var(--sp-lg);"></textarea>
                 <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center;">
                     <i class="fas fa-check"></i>
                     <span>Lưu</span>

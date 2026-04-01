@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class OrderItem extends Model
 {
@@ -14,6 +15,8 @@ class OrderItem extends Model
         'unit_price',
         'discount_per_unit',
         'subtotal',
+        'selected_color',
+        'selected_size',
     ];
 
     protected $casts = [
@@ -36,5 +39,13 @@ class OrderItem extends Model
     public function product(): BelongsTo
     {
         return $this->belongsTo(Product::class);
+    }
+
+    /**
+     * Get the reviews for this order item
+     */
+    public function reviews(): HasMany
+    {
+        return $this->hasMany(Review::class);
     }
 }

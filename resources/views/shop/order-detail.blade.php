@@ -39,13 +39,12 @@
                 <div style="position: relative; padding-left: 0;">
                     @php
                         $statuses = [
-                            ['status' => 'pending', 'label' => 'Đơn Hàng Được Tạo', 'icon' => '📝'],
-                            ['status' => 'confirmed', 'label' => 'Đã Xác Nhận', 'icon' => '✓'],
-                            ['status' => 'preparing', 'label' => 'Đang Chuẩn Bị', 'icon' => '📦'],
-                            ['status' => 'shipped', 'label' => 'Đang Giao Hàng', 'icon' => '🚚'],
-                            ['status' => 'completed', 'label' => 'Hoàn Thành', 'icon' => '🎉'],
+                            ['status' => 'dang_cho', 'label' => 'Đơn Hàng Được Tạo', 'icon' => '📝'],
+                            ['status' => 'dang_xu_ly', 'label' => 'Đang Xử Lý', 'icon' => '⚙️'],
+                            ['status' => 'dang_giao', 'label' => 'Đang Giao Hàng', 'icon' => '🚚'],
+                            ['status' => 'da_giao', 'label' => 'Đã Giao', 'icon' => '🎉'],
                         ];
-                        $statusOrder = ['pending' => 0, 'confirmed' => 1, 'preparing' => 2, 'shipped' => 3, 'completed' => 4];
+                        $statusOrder = ['dang_cho' => 0, 'dang_xu_ly' => 1, 'dang_giao' => 2, 'da_giao' => 3];
                         $currentStatusIndex = $statusOrder[$order->order_status] ?? 0;
                     @endphp
 
@@ -126,7 +125,7 @@
                                 <div style="font-size: 14px; font-weight: 600; background: linear-gradient(135deg, #00d4ff, #8b5cf6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">{{ number_format($item->subtotal, 0, ',', '.') }}đ</div>
 
                                 <!-- Review Button -->
-                                @if($order->order_status === 'completed' && !$item->reviews()->where('user_id', auth()->id())->exists())
+                                @if($order->order_status === 'da_giao' && !$item->reviews()->where('user_id', auth()->id())->exists())
                                     <a href="{{ route('review.create', $item->product->slug) }}" style="display: inline-block; margin-top: 8px; background: rgba(0,212,255,0.15); color: #00d4ff; border: 1px solid rgba(0,212,255,0.3); padding: 6px 12px; border-radius: 6px; font-size: 12px; font-weight: 600; text-decoration: none; transition: all 0.3s;" onmouseover="this.style.background='rgba(0,212,255,0.25)'; this.style.borderColor='rgba(0,212,255,0.5)';" onmouseout="this.style.background='rgba(0,212,255,0.15)'; this.style.borderColor='rgba(0,212,255,0.3)';">✍️ Đánh Giá</a>
                                 @elseif($item->reviews()->where('user_id', auth()->id())->exists())
                                     <div style="margin-top: 8px; font-size: 12px; color: #86efac;">✓ Bạn đã đánh giá</div>
@@ -180,9 +179,9 @@
                 <!-- Status Badge -->
                 <div style="margin-top: 20px; padding-top: 20px; border-top: 1px solid rgba(0,212,255,0.2);">
                     <div style="font-size: 12px; color: #808090; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px;">Trạng Thái Thanh Toán</div>
-                    @if($order->payment_status === 'paid')
+                    @if($order->payment_status === 'hoan_thanh')
                         <span style="background: linear-gradient(135deg, rgba(16,185,129,0.2), rgba(16,185,129,0.1)); color: #86efac; padding: 8px 12px; border-radius: 6px; font-size: 12px; font-weight: 600; display: inline-block;">✓ Đã Thanh Toán</span>
-                    @elseif($order->payment_status === 'pending')
+                    @elseif($order->payment_status === 'dang_xu_ly')
                         <span style="background: linear-gradient(135deg, rgba(234,179,8,0.2), rgba(234,179,8,0.1)); color: #fde047; padding: 8px 12px; border-radius: 6px; font-size: 12px; font-weight: 600; display: inline-block;">⏳ Chờ Xử Lý</span>
                     @else
                         <span style="background: linear-gradient(135deg, rgba(239,68,68,0.2), rgba(239,68,68,0.1)); color: #fca5a5; padding: 8px 12px; border-radius: 6px; font-size: 12px; font-weight: 600; display: inline-block;">✗ Chưa Thanh Toán</span>
@@ -198,27 +197,6 @@
         </div>
     </div>
 </div>
-@endsection
-                                </p>
-                                <p style="color: #00f5ff; font-weight: 600; margin-top: 8px;">
-                                    {{ number_format($item->subtotal, 0, ',', '.') }}đ
-                                </p>
-
-                                <!-- Review Button (if completed) -->
-                                @if($order->order_status === 'completed' && !$item->reviews()->where('user_id', auth()->id())->exists())
-                                    <a href="{{ route('review.create', $item->product->slug) }}" class="btn btn-secondary btn-small" style="display: inline-block; margin-top: 8px;">
-                                        ✍️ Đánh Giá
-                                    </a>
-                                @elseif($item->reviews()->where('user_id', auth()->id())->exists())
-                                    <div style="margin-top: 8px; font-size: 12px; color: #00f5ff;">
-                                        ✓ Bạn đã đánh giá sản phẩm này
-                                    </div>
-                                @endif
-                            </div>
-                        </div>
-                    @endforeach
-                </div>
-            </div>
 
             <!-- Shipping Info -->
             <div class="card fade-in" style="margin-bottom: 20px;">
