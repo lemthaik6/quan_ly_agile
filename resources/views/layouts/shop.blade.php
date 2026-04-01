@@ -1349,8 +1349,9 @@
 <body>
     <!-- Navigation -->
     <nav class="nav">
-        <a href="{{ route('shop.index') }}" class="logo">LEMTHAI</a>
+        <a href="{{ route('home') }}" class="logo">LEMTHAI</a>
         <div class="nav-links">
+            <a href="{{ route('home') }}" class="nav-link">Trang Chủ</a>
             <a href="{{ route('shop.index') }}" class="nav-link">Shop</a>
             <a href="#" class="nav-link">About</a>
             <a href="#" class="nav-link">Contact</a>
@@ -1395,8 +1396,68 @@
     </div>
 
     <!-- Footer -->
-    <footer style="background: rgba(0, 0, 0, 0.5); border-top: 1px solid rgba(0, 245, 255, 0.2); padding: 40px 20px; text-align: center; color: #999; margin-top: 60px;">
-        <p>© 2024 LEMTHAI Store. All rights reserved.</p>
+    <footer style="background: linear-gradient(180deg, rgba(8,8,8,0.8) 0%, rgba(0,0,0,0.95) 100%); border-top: var(--border-glow); padding: var(--sp-3xl) var(--sp-xl); margin-top: var(--sp-3xl); position: relative; z-index: 2;">
+        <div style="max-width: 1400px; margin: 0 auto;">
+            <!-- Footer Grid -->
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: var(--sp-2xl); margin-bottom: var(--sp-3xl);">
+                <!-- Brand -->
+                <div>
+                    <a href="{{ route('home') }}" style="font-size: 20px; font-weight: var(--fw-bold); background: linear-gradient(135deg, var(--laser-blue), var(--electric-violet)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; text-decoration: none; display: inline-block; margin-bottom: var(--sp-lg);">
+                        LEMTHAI STORE
+                    </a>
+                    <p style="color: var(--text-secondary); font-size: var(--text-sm); line-height: 1.6;">
+                        Nơi tin cậy để mua sắm thời trang chất lượng cao với giá cạnh tranh nhất.
+                    </p>
+                </div>
+                
+                <!-- Shop Links -->
+                <div>
+                    <h4 style="color: var(--text-primary); font-size: var(--text-base); font-weight: var(--fw-bold); margin-bottom: var(--sp-lg);">Cửa Hàng</h4>
+                    <ul style="list-style: none; display: flex; flex-direction: column; gap: var(--sp-md);">
+                        <li><a href="{{ route('shop.index') }}" style="color: var(--text-secondary); text-decoration: none; font-size: var(--text-sm); transition: color 0.3s;">Tất Cả Sản Phẩm</a></li>
+                        <li><a href="{{ route('shop.index', ['sort' => 'popular']) }}" style="color: var(--text-secondary); text-decoration: none; font-size: var(--text-sm); transition: color 0.3s;">Sản Phẩm Phổ Biến</a></li>
+                        <li><a href="{{ route('shop.index', ['sort' => 'latest']) }}" style="color: var(--text-secondary); text-decoration: none; font-size: var(--text-sm); transition: color 0.3s;">Sản Phẩm Mới</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Account Links -->
+                <div>
+                    <h4 style="color: var(--text-primary); font-size: var(--text-base); font-weight: var(--fw-bold); margin-bottom: var(--sp-lg);">Tài Khoản</h4>
+                    <ul style="list-style: none; display: flex; flex-direction: column; gap: var(--sp-md);">
+                        @auth
+                            <li><a href="{{ route('order.list') }}" style="color: var(--text-secondary); text-decoration: none; font-size: var(--text-sm); transition: color 0.3s;">Đơn Hàng Của Tôi</a></li>
+                            <li><a href="{{ route('profile.show') }}" style="color: var(--text-secondary); text-decoration: none; font-size: var(--text-sm); transition: color 0.3s;">Tài Khoản</a></li>
+                        @else
+                            <li><a href="{{ route('login') }}" style="color: var(--text-secondary); text-decoration: none; font-size: var(--text-sm); transition: color 0.3s;">Đăng Nhập</a></li>
+                            <li><a href="{{ route('register') }}" style="color: var(--text-secondary); text-decoration: none; font-size: var(--text-sm); transition: color 0.3s;">Đăng Ký</a></li>
+                        @endauth
+                    </ul>
+                </div>
+                
+                <!-- Contact Info -->
+                <div>
+                    <h4 style="color: var(--text-primary); font-size: var(--text-base); font-weight: var(--fw-bold); margin-bottom: var(--sp-lg);">Liên Hệ</h4>
+                    <ul style="list-style: none; display: flex; flex-direction: column; gap: var(--sp-md);">
+                        <li style="color: var(--text-secondary); font-size: var(--text-sm);">📧 support@lemthai.com</li>
+                        <li style="color: var(--text-secondary); font-size: var(--text-sm);">📱 1800-0000</li>
+                        <li style="color: var(--text-secondary); font-size: var(--text-sm);">📍 123 Đường ABC, Hà Nội</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Divider -->
+            <div style="border-top: var(--border-thin); margin-bottom: var(--sp-2xl);"></div>
+            
+            <!-- Bottom -->
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: var(--sp-lg);">
+                <p style="color: var(--text-muted); font-size: var(--text-sm);">© 2024 LEMTHAI Store. All rights reserved.</p>
+                <div style="display: flex; gap: var(--sp-xl); flex-wrap: wrap;">
+                    <a href="#" style="color: var(--text-muted); text-decoration: none; font-size: var(--text-sm); transition: color 0.3s;">Chính Sách Bảo Mật</a>
+                    <a href="#" style="color: var(--text-muted); text-decoration: none; font-size: var(--text-sm); transition: color 0.3s;">Điều Khoản Sử Dụng</a>
+                    <a href="#" style="color: var(--text-muted); text-decoration: none; font-size: var(--text-sm); transition: color 0.3s;">Hỗ Trợ Khách Hàng</a>
+                </div>
+            </div>
+        </div>
     </footer>
 
     @yield('extra-js')

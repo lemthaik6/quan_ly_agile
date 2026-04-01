@@ -9,6 +9,24 @@ use Illuminate\Http\Request;
 class ProductController extends Controller
 {
     /**
+     * Display homepage with featured products and categories
+     */
+    public function homepage()
+    {
+        $featuredProducts = Product::where('is_active', true)
+            ->with('category')
+            ->orderBy('created_at', 'desc')
+            ->limit(3)
+            ->get();
+
+        $categories = Category::where('is_active', true)
+            ->withCount('products')
+            ->get();
+
+        return view('shop.homepage', compact('featuredProducts', 'categories'));
+    }
+
+    /**
      * Display a listing of active products with filters
      */
     public function index(Request $request)

@@ -5,11 +5,10 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ReviewController;
+use App\Http\Controllers\ProfileController;
 
-// Home - redirect to shop
-Route::get('/', function () {
-    return redirect()->route('shop.index');
-});
+// Home - redirect to homepage
+Route::get('/', [ProductController::class, 'homepage'])->name('home');
 
 // Public routes
 Route::prefix('shop')->group(function () {
@@ -28,6 +27,9 @@ Route::prefix('cart')->group(function () {
 
 // Authenticated routes
 Route::middleware('auth')->group(function () {
+    // Profile
+    Route::get('/profile', [ProfileController::class, 'show'])->name('profile.show');
+
     // Checkout
     Route::get('/checkout', [OrderController::class, 'checkout'])->name('checkout.index');
     Route::post('/checkout', [OrderController::class, 'store'])->name('checkout.store');
