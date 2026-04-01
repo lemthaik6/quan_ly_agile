@@ -47,22 +47,21 @@ class AdminController extends Controller
             ->limit(5)
             ->get();
 
-        // Doanh thu theo tháng (6 tháng gần đây)
-        $monthlyRevenue = Order::select(
+        // Doanh thu theo tháng (12 tháng trong năm)
+        $monthlyRevenueRaw = Order::select(
                 DB::raw('MONTH(created_at) as month'),
                 DB::raw('SUM(final_amount) as revenue')
             )
             ->where('payment_status', 'hoan_thanh')
             ->whereYear('created_at', now()->year)
             ->groupBy(DB::raw('MONTH(created_at)'))
-            ->orderBy(DB::raw('MONTH(created_at)'))
-            ->get()
-            ->map(function($item) {
-                return [
-                    'month' => $this->getMonthName($item->month),
-                    'revenue' => $item->revenue
-                ];
-            });
+            ->pluck('revenue', 'month');
+
+        // Fill in all 12 months with 0 if no data
+        $monthlyRevenue = [];
+        for ($month = 1; $month <= 12; $month++) {
+            $monthlyRevenue[] = $monthlyRevenueRaw->get($month) ?? 0;
+        }
 
         // Phân bố trạng thái đơn hàng
         $orderStatusDistribution = [
@@ -93,6 +92,10 @@ class AdminController extends Controller
             ->whereBetween('created_at', [now()->subDays(7), now()])
             ->count();
 
+        // Format order status distribution for chart
+        $orderStatuses = ['Chờ Xác Nhận', 'Đang Xử Lý', 'Đang Giao', 'Đã Giao', 'Đã Hủy'];
+        $orderStatusCounts = array_values($orderStatusDistribution);
+
         return view('admin.dashboard', compact(
             'totalProducts',
             'activeProducts',
@@ -106,7 +109,8 @@ class AdminController extends Controller
             'recentOrders',
             'topProducts',
             'monthlyRevenue',
-            'orderStatusDistribution',
+            'orderStatuses',
+            'orderStatusCounts',
             'todayRevenue',
             'todayOrders',
             'topSellingProducts',

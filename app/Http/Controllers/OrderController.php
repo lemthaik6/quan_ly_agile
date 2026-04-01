@@ -69,7 +69,7 @@ class OrderController extends Controller
             'discount_amount' => $discountAmount,
             'final_amount' => $finalAmount,
             'order_status' => 'dang_cho',
-            'payment_status' => $request->payment_method === 'cod' ? 'chua_thanh_toan' : 'dang_xu_ly',
+            'payment_status' => $request->payment_method === 'cod' ? 'hoan_thanh' : 'dang_xu_ly',
             'payment_method' => $request->payment_method,
             'shipping_address' => $request->address,
             'shipping_city' => $request->city,

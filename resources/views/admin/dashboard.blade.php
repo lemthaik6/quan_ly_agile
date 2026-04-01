@@ -205,7 +205,7 @@
     new Chart(revenueCtx, {
         type: 'line',
         data: {
-            labels: @json(array_map(fn($m) => "T" . $m, range(1, 13))),
+            labels: ['T1', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7', 'T8', 'T9', 'T10', 'T11', 'T12'],
             datasets: [{
                 label: 'Doanh Thu (₫)',
                 data: @json($monthlyRevenue ?? array_fill(0, 12, 0)),
