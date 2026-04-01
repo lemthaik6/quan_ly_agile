@@ -14,9 +14,9 @@ class ProductController extends Controller
     public function homepage()
     {
         $featuredProducts = Product::where('is_active', true)
+            ->where('is_featured', true)
             ->with('category')
-            ->orderBy('created_at', 'desc')
-            ->limit(3)
+            ->limit(9)
             ->get();
 
         $categories = Category::where('is_active', true)

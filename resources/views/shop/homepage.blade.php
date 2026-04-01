@@ -67,7 +67,7 @@
             <p style="color: var(--text-secondary); font-size: var(--text-lg); max-width: 500px; margin: 0 auto;">Những sản phẩm được khách hàng bình chọn cao nhất</p>
         </div>
         
-        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--sp-xl); max-width: 1200px; margin: 0 auto;">
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: var(--sp-xl);">
             @forelse($featuredProducts ?? [] as $product)
                 <div style="background: linear-gradient(135deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02)); border: 1px solid rgba(255,255,255,0.08); border-radius: var(--radius-lg); overflow: hidden; transition: all 0.4s; cursor: pointer; display: flex; flex-direction: column; height: 100%;" onmouseover="this.style.borderColor='rgba(0,212,255,0.4)'; this.style.background='linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05))'; this.style.boxShadow='0 20px 40px rgba(0,212,255,0.15)'; this.style.transform='translateY(-8px)';" onmouseout="this.style.borderColor='rgba(255,255,255,0.08)'; this.style.background='linear-gradient(135deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02))'; this.style.boxShadow=''; this.style.transform='';">
                     <div style="position: relative; height: 320px; background: linear-gradient(135deg, rgba(0,212,255,0.05), rgba(139,92,246,0.03)); overflow: hidden;">
