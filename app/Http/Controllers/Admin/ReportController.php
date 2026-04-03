@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Order;
 use App\Models\User;
+use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -73,6 +74,9 @@ class ReportController extends Controller
             ->groupBy('payment_method')
             ->get();
 
+        // Danh mục sản phẩm
+        $categories = Category::where('is_active', true)->get();
+
         return view('admin.reports.index', compact(
             'revenue',
             'revenueOrders',
@@ -83,6 +87,7 @@ class ReportController extends Controller
             'dailyRevenue',
             'ordersByStatus',
             'paymentMethods',
+            'categories',
             'startDate',
             'endDate'
         ));

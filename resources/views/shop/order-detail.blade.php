@@ -102,36 +102,46 @@
 
                 <div style="display: flex; flex-direction: column; gap: 16px;">
                     @foreach($order->orderItems as $item)
-                        <div style="display: flex; gap: 16px; padding: 16px; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.08); border-radius: 10px; transition: all 0.3s;" onmouseover="this.style.borderColor='rgba(0,212,255,0.3)'; this.style.background='rgba(0,212,255,0.05)';" onmouseout="this.style.borderColor='rgba(255,255,255,0.08)'; this.style.background='rgba(255,255,255,0.02)';">
-                            <!-- Image -->
-                            <div style="width: 100px; height: 100px; background: rgba(0,212,255,0.1); border-radius: 10px; overflow: hidden; flex-shrink: 0;">
-                                @if($item->product->image)
-                                    <img src="{{ asset('storage/' . $item->product->image) }}" alt="{{ $item->product->name }}" style="width: 100%; height: 100%; object-fit: cover;">
-                                @else
-                                    <div style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; color: #00d4ff; font-size: 20px;">📦</div>
-                                @endif
-                            </div>
+                        @if($item->product)
+                            <div style="display: flex; gap: 16px; padding: 16px; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.08); border-radius: 10px; transition: all 0.3s;" onmouseover="this.style.borderColor='rgba(0,212,255,0.3)'; this.style.background='rgba(0,212,255,0.05)';" onmouseout="this.style.borderColor='rgba(255,255,255,0.08)'; this.style.background='rgba(255,255,255,0.02)';">
+                                <!-- Image -->
+                                <div style="width: 100px; height: 100px; background: rgba(0,212,255,0.1); border-radius: 10px; overflow: hidden; flex-shrink: 0;">
+                                    @if($item->product->image)
+                                        <img src="{{ asset('storage/' . $item->product->image) }}" alt="{{ $item->product->name }}" style="width: 100%; height: 100%; object-fit: cover;">
+                                    @else
+                                        <div style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; color: #00d4ff; font-size: 20px;">📦</div>
+                                    @endif
+                                </div>
 
-                            <!-- Details -->
-                            <div style="flex: 1;">
-                                <a href="{{ route('product.show', $item->product->slug) }}" style="text-decoration: none; color: inherit;">
-                                    <h4 style="color: #f0f0f0; font-size: 14px; font-weight: 600; margin-bottom: 8px;">{{ $item->product->name }}</h4>
-                                </a>
-                                <p style="font-size: 12px; color: #b0b0c0; margin-bottom: 8px;">
-                                    @if($item->selected_color) <span style="background: rgba(0,212,255,0.1); padding: 2px 6px; border-radius: 4px;">{{ $item->selected_color }}</span> @endif
-                                    @if($item->selected_size) <span style="background: rgba(0,212,255,0.1); padding: 2px 6px; border-radius: 4px; margin-left: 4px;">{{ $item->selected_size }}</span> @endif
-                                    <span style="color: #808090; margin-left: 8px;">× {{ $item->quantity }}</span>
-                                </p>
-                                <div style="font-size: 14px; font-weight: 600; background: linear-gradient(135deg, #00d4ff, #8b5cf6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">{{ number_format($item->subtotal, 0, ',', '.') }}đ</div>
+                                <!-- Details -->
+                                <div style="flex: 1;">
+                                    <a href="{{ route('product.show', $item->product->slug) }}" style="text-decoration: none; color: inherit;">
+                                        <h4 style="color: #f0f0f0; font-size: 14px; font-weight: 600; margin-bottom: 8px;">{{ $item->product->name }}</h4>
+                                    </a>
+                                    <p style="font-size: 12px; color: #b0b0c0; margin-bottom: 8px;">
+                                        @if($item->selected_color) <span style="background: rgba(0,212,255,0.1); padding: 2px 6px; border-radius: 4px;">{{ $item->selected_color }}</span> @endif
+                                        @if($item->selected_size) <span style="background: rgba(0,212,255,0.1); padding: 2px 6px; border-radius: 4px; margin-left: 4px;">{{ $item->selected_size }}</span> @endif
+                                        <span style="color: #808090; margin-left: 8px;">× {{ $item->quantity }}</span>
+                                    </p>
+                                    <div style="font-size: 14px; font-weight: 600; background: linear-gradient(135deg, #00d4ff, #8b5cf6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">{{ number_format($item->subtotal, 0, ',', '.') }}đ</div>
 
-                                <!-- Review Button -->
-                                @if($order->order_status === 'da_giao' && !$item->reviews()->where('user_id', auth()->id())->exists())
-                                    <a href="{{ route('review.create', $item->product->slug) }}" style="display: inline-block; margin-top: 8px; background: rgba(0,212,255,0.15); color: #00d4ff; border: 1px solid rgba(0,212,255,0.3); padding: 6px 12px; border-radius: 6px; font-size: 12px; font-weight: 600; text-decoration: none; transition: all 0.3s;" onmouseover="this.style.background='rgba(0,212,255,0.25)'; this.style.borderColor='rgba(0,212,255,0.5)';" onmouseout="this.style.background='rgba(0,212,255,0.15)'; this.style.borderColor='rgba(0,212,255,0.3)';">✍️ Đánh Giá</a>
-                                @elseif($item->reviews()->where('user_id', auth()->id())->exists())
-                                    <div style="margin-top: 8px; font-size: 12px; color: #86efac;">✓ Bạn đã đánh giá</div>
-                                @endif
+                                    <!-- Review Button -->
+                                    @if($order->order_status === 'da_giao' && !$item->reviews()->where('user_id', auth()->id())->exists())
+                                        <a href="{{ route('review.create', $item->product->slug) }}" style="display: inline-block; margin-top: 8px; background: rgba(0,212,255,0.15); color: #00d4ff; border: 1px solid rgba(0,212,255,0.3); padding: 6px 12px; border-radius: 6px; font-size: 12px; font-weight: 600; text-decoration: none; transition: all 0.3s;" onmouseover="this.style.background='rgba(0,212,255,0.25)'; this.style.borderColor='rgba(0,212,255,0.5)';" onmouseout="this.style.background='rgba(0,212,255,0.15)'; this.style.borderColor='rgba(0,212,255,0.3)';">✍️ Đánh Giá</a>
+                                    @elseif($item->reviews()->where('user_id', auth()->id())->exists())
+                                        <div style="margin-top: 8px; font-size: 12px; color: #86efac;">✓ Bạn đã đánh giá</div>
+                                    @endif
+                                </div>
                             </div>
-                        </div>
+                        @else
+                            <div style="display: flex; gap: 16px; padding: 16px; background: rgba(239,68,68,0.1); border: 1px solid rgba(239,68,68,0.3); border-radius: 10px;">
+                                <div style="width: 100px; height: 100px; background: rgba(239,68,68,0.2); border-radius: 10px; display: flex; align-items: center; justify-content: center; color: #ef4444; font-size: 20px; flex-shrink: 0;">❌</div>
+                                <div style="flex: 1;">
+                                    <h4 style="color: #ef4444; font-size: 14px; font-weight: 600; margin-bottom: 8px;">Sản phẩm không có sẵn</h4>
+                                    <p style="font-size: 12px; color: #b0b0c0;">Sản phẩm này có thể đã bị xóa. Số lượng: {{ $item->quantity }} × {{ number_format($item->unit_price, 0, ',', '.') }}đ = {{ number_format($item->subtotal, 0, ',', '.') }}đ</p>
+                                </div>
+                            </div>
+                        @endif
                     @endforeach
                 </div>
             </div>

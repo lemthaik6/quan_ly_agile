@@ -65,7 +65,7 @@ class ProductController extends Controller
             'discount_price' => 'nullable|numeric|min:0',
             'quantity_in_stock' => 'required|integer|min:0',
             'sku' => 'nullable|string|max:100|unique:products',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'image' => 'nullable|image|max:2048',
             'is_featured' => 'boolean',
             'is_active' => 'boolean',
         ]);
@@ -111,7 +111,7 @@ class ProductController extends Controller
             'discount_price' => 'nullable|numeric|min:0',
             'quantity_in_stock' => 'required|integer|min:0',
             'sku' => 'nullable|string|max:100|unique:products,sku,' . $product->id,
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'image' => 'nullable|image|max:2048',
             'is_featured' => 'boolean',
             'is_active' => 'boolean',
         ]);

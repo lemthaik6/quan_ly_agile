@@ -24,9 +24,17 @@
                 </div>
 
                 <div>
-                    <label for="description">Mô Tả</label>
+                    <label for="description">Mô Tả Chi Tiết</label>
                     <textarea id="description" name="description" rows="4" placeholder="Mô tả chi tiết sản phẩm...">{{ old('description', $product->description) }}</textarea>
                     @error('description')
+                        <p style="color: var(--error); font-size: 12px; margin-top: 4px;">{{ $message }}</p>
+                    @enderror
+                </div>
+
+                <div>
+                    <label for="short_description">Mô Tả Ngắn</label>
+                    <textarea id="short_description" name="short_description" rows="2" placeholder="Mô tả ngắn (tối đa 500 ký tự)..." maxlength="500">{{ old('short_description', $product->short_description) }}</textarea>
+                    @error('short_description')
                         <p style="color: var(--error); font-size: 12px; margin-top: 4px;">{{ $message }}</p>
                     @enderror
                 </div>
@@ -80,6 +88,22 @@
                     <label for="quantity_in_stock">Tồn Kho <span style="color: var(--error);">*</span></label>
                     <input type="number" id="quantity_in_stock" name="quantity_in_stock" value="{{ old('quantity_in_stock', $product->quantity_in_stock) }}" required placeholder="0">
                     @error('quantity_in_stock')
+                        <p style="color: var(--error); font-size: 12px; margin-top: 4px;">{{ $message }}</p>
+                    @enderror
+                </div>
+
+                <div>
+                    <label for="discount_price">Giá Khuyến Mãi</label>
+                    <input type="number" id="discount_price" name="discount_price" value="{{ old('discount_price', $product->discount_price) }}" step="0.01" placeholder="0">
+                    @error('discount_price')
+                        <p style="color: var(--error); font-size: 12px; margin-top: 4px;">{{ $message }}</p>
+                    @enderror
+                </div>
+
+                <div>
+                    <label for="sku">SKU</label>
+                    <input type="text" id="sku" name="sku" value="{{ old('sku', $product->sku) }}" placeholder="Nhập SKU..." maxlength="100">
+                    @error('sku')
                         <p style="color: var(--error); font-size: 12px; margin-top: 4px;">{{ $message }}</p>
                     @enderror
                 </div>
@@ -139,20 +163,6 @@
             </div>
         </div>
 
-        <!-- Danger Zone -->
-        <div class="panel" style="padding: var(--sp-xl); background: rgba(239,68,68,0.05); border-color: rgba(239,68,68,0.2);">
-            <h3 style="margin: 0 0 var(--sp-xl) 0; font-size: 16px; font-weight: 600; color: var(--error);">Danger Zone</h3>
-
-            <form method="POST" action="{{ route('admin.products.destroy', $product) }}" style="display: inline;" onsubmit="return confirm('Bạn chắc chắn muốn xóa sản phẩm này? Hành động không thể hoàn tác.');">
-                @csrf
-                @method('DELETE')
-                <button type="submit" class="btn btn-danger">
-                    <i class="fas fa-trash"></i>
-                    <span>Xóa Sản Phẩm</span>
-                </button>
-            </form>
-        </div>
-
         <!-- Actions -->
         <div style="display: flex; gap: var(--sp-lg); justify-content: flex-end;">
             <a href="{{ route('admin.products.index') }}" class="btn btn-secondary">
@@ -165,6 +175,20 @@
             </button>
         </div>
     </form>
+
+    <!-- Danger Zone (Outside main form) -->
+    <div class="panel" style="padding: var(--sp-xl); background: rgba(239,68,68,0.05); border-color: rgba(239,68,68,0.2);">
+        <h3 style="margin: 0 0 var(--sp-xl) 0; font-size: 16px; font-weight: 600; color: var(--error);">Danger Zone</h3>
+
+        <form method="POST" action="{{ route('admin.products.destroy', $product) }}" style="display: inline;" onsubmit="return confirm('Bạn chắc chắn muốn xóa sản phẩm này? Hành động không thể hoàn tác.');">
+            @csrf
+            @method('DELETE')
+            <button type="submit" class="btn btn-danger">
+                <i class="fas fa-trash"></i>
+                <span>Xóa Sản Phẩm</span>
+            </button>
+        </form>
+    </div>
 </div>
 
 <script>

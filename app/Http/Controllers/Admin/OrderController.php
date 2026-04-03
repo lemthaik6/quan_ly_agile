@@ -84,7 +84,7 @@ class OrderController extends Controller
     public function updatePaymentStatus(Request $request, Order $order)
     {
         $validated = $request->validate([
-            'payment_status' => 'required|in:dang_cho,chua_thanh_toan,dang_xu_ly,hoan_thanh,that_bai',
+            'payment_status' => 'required|in:chua_thanh_toan,dang_xu_ly,hoan_thanh,that_bai',
         ]);
 
         $order->update(['payment_status' => $validated['payment_status']]);
