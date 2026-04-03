@@ -6,6 +6,7 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\PageController;
 
 // Home - redirect to homepage
 Route::get('/', [ProductController::class, 'homepage'])->name('home');
@@ -15,6 +16,11 @@ Route::prefix('shop')->group(function () {
     Route::get('/', [ProductController::class, 'index'])->name('shop.index');
     Route::get('/product/{slug}', [ProductController::class, 'show'])->name('product.show');
 });
+
+// Pages
+Route::get('/about', [PageController::class, 'about'])->name('about');
+Route::get('/contact', [PageController::class, 'contact'])->name('contact');
+Route::post('/contact', [PageController::class, 'submitContact'])->name('contact.submit');
 
 // Cart routes (public)
 Route::prefix('cart')->group(function () {

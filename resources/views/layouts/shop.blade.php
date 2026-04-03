@@ -1353,8 +1353,8 @@
         <div class="nav-links">
             <a href="{{ route('home') }}" class="nav-link">Trang Chủ</a>
             <a href="{{ route('shop.index') }}" class="nav-link">Shop</a>
-            <a href="#" class="nav-link">About</a>
-            <a href="#" class="nav-link">Contact</a>
+            <a href="{{ route('about') }}" class="nav-link">About</a>
+            <a href="{{ route('contact') }}" class="nav-link">Contact</a>
 
             <a href="{{ route('cart.index') }}" class="nav-link" style="position: relative;">
                 🛒 Giỏ Hàng
@@ -1417,6 +1417,16 @@
                         <li><a href="{{ route('shop.index') }}" style="color: var(--text-secondary); text-decoration: none; font-size: var(--text-sm); transition: color 0.3s;">Tất Cả Sản Phẩm</a></li>
                         <li><a href="{{ route('shop.index', ['sort' => 'popular']) }}" style="color: var(--text-secondary); text-decoration: none; font-size: var(--text-sm); transition: color 0.3s;">Sản Phẩm Phổ Biến</a></li>
                         <li><a href="{{ route('shop.index', ['sort' => 'latest']) }}" style="color: var(--text-secondary); text-decoration: none; font-size: var(--text-sm); transition: color 0.3s;">Sản Phẩm Mới</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Company Links -->
+                <div>
+                    <h4 style="color: var(--text-primary); font-size: var(--text-base); font-weight: var(--fw-bold); margin-bottom: var(--sp-lg);">Công Ty</h4>
+                    <ul style="list-style: none; display: flex; flex-direction: column; gap: var(--sp-md);">
+                        <li><a href="{{ route('about') }}" style="color: var(--text-secondary); text-decoration: none; font-size: var(--text-sm); transition: color 0.3s;">Về Chúng Tôi</a></li>
+                        <li><a href="{{ route('contact') }}" style="color: var(--text-secondary); text-decoration: none; font-size: var(--text-sm); transition: color 0.3s;">Liên Hệ</a></li>
+                        <li><a href="#" style="color: var(--text-secondary); text-decoration: none; font-size: var(--text-sm); transition: color 0.3s;">Blog</a></li>
                     </ul>
                 </div>
                 
