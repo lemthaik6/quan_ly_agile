@@ -164,7 +164,48 @@
             </table>
         </div>
 
-        <!-- Order Status Distribution -->
+        <!-- Low Stock Products Table -->
+        <div class="panel" style="overflow: hidden;">
+            <div style="padding: var(--sp-xl); border-bottom: 1px solid rgba(255,255,255,0.08);">
+                <h3 style="margin: 0; font-size: 14px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--hot-pink);">
+                    <i class="fas fa-exclamation-triangle"></i> Sắp Hết Kho
+                </h3>
+            </div>
+            <table style="width: 100%;">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Sản Phẩm</th>
+                        <th style="text-align: right;">Còn Lại</th>
+                        <th style="text-align: right;">Giá</th>
+                    </tr>
+                </thead>
+                <tbody>
+                @forelse($lowStockProducts as $index => $product)
+                    <tr>
+                        <td>
+                            <span class="badge" style="font-weight: 700; background: linear-gradient(135deg, rgba(255,0,110,0.2), rgba(255,40,140,0.1)); color: var(--hot-pink);">{{ $index + 1 }}</span>
+                        </td>
+                        <td>
+                            <p style="margin: 0; font-size: 13px; font-weight: 600;">{{ $product->name ?? 'N/A' }}</p>
+                        </td>
+                        <td style="text-align: right;">
+                            <span style="font-size: 13px; font-weight: 600; color: var(--hot-pink);">{{ $product->quantity_in_stock ?? 0 }} cái</span>
+                        </td>
+                        <td style="text-align: right;">
+                            <span style="font-size: 13px; font-weight: 600;">{{ number_format($product->price ?? 0, 0, ',', '.') }}₫</span>
+                        </td>
+                    </tr>
+                @empty
+                    <tr>
+                        <td colspan="4" style="text-align: center; padding: var(--sp-lg);">
+                            <p style="margin: 0; font-size: 12px; color: var(--text-muted);">Tất cả sản phẩm đều còn kho</p>
+                        </td>
+                    </tr>
+                @endforelse
+                </tbody>
+            </table>
+        </div>
         <div class="panel" style="overflow: hidden;">
             <div style="padding: var(--sp-xl); border-bottom: 1px solid rgba(255,255,255,0.08);">
                 <h3 style="margin: 0; font-size: 14px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--laser-blue);">

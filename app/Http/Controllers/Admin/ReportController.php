@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Order;
 use App\Models\User;
+use App\Models\Product;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -57,6 +58,13 @@ class ReportController extends Controller
             ->limit(10)
             ->get();
 
+        // Sản phẩm sắp hết kho
+        $lowStockProducts = Product::where('quantity_in_stock', '<=', 10)
+            ->where('is_active', true)
+            ->orderBy('quantity_in_stock')
+            ->limit(10)
+            ->get();
+
         // Doanh thu theo ngày
         $dailyRevenue = Order::select(
                 DB::raw('DATE(created_at) as date'),
@@ -105,9 +113,11 @@ class ReportController extends Controller
         $ordersCompleted = $orderStatusMap['da_giao'] ?? 0;
         $ordersCancelled = $orderStatusMap['da_huy'] ?? 0;
 
+        // Alias cho dễ sử dụng trong view
+        $totalRevenue = $revenue;
+
         return view('admin.reports.index', compact(
-            'revenue',
-            'totalRevenue' => $revenue,
+            'totalRevenue',
             'revenueOrders',
             'totalOrders',
             'completedOrders',
@@ -115,6 +125,7 @@ class ReportController extends Controller
             'newCustomers',
             'totalCustomers',
             'topProducts',
+            'lowStockProducts',
             'dailyRevenue',
             'ordersByStatus',
             'paymentMethods',
