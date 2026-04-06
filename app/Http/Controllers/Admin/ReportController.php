@@ -16,8 +16,8 @@ class ReportController extends Controller
      */
     public function index(Request $request)
     {
-        $startDate = $request->get('start_date') ? \Carbon\Carbon::parse($request->start_date) : now()->subDays(30);
-        $endDate = $request->get('end_date') ? \Carbon\Carbon::parse($request->end_date) : now();
+        $startDate = $request->get('from_date') ? \Carbon\Carbon::parse($request->from_date) : now()->subDays(30);
+        $endDate = $request->get('to_date') ? \Carbon\Carbon::parse($request->to_date) : now();
 
         // Doanh thu
         $revenue = Order::where('payment_status', 'hoan_thanh')
@@ -30,6 +30,9 @@ class ReportController extends Controller
 
         // Đơn hàng
         $totalOrders = Order::whereBetween('created_at', [$startDate, $endDate])->count();
+        $completedOrders = Order::where('order_status', 'da_giao')
+            ->whereBetween('created_at', [$startDate, $endDate])
+            ->count();
         $canceledOrders = Order::where('order_status', 'da_huy')
             ->whereBetween('created_at', [$startDate, $endDate])
             ->count();
@@ -39,13 +42,18 @@ class ReportController extends Controller
             ->whereBetween('created_at', [$startDate, $endDate])
             ->count();
 
+        // Tổng khách hàng
+        $totalCustomers = User::where('role', 'khach_hang')->count();
+
         // Sản phẩm bán chạy
         $topProducts = DB::table('order_items')
             ->join('products', 'order_items.product_id', '=', 'products.id')
+            ->join('orders', 'order_items.order_id', '=', 'orders.id')
             ->select('products.id', 'products.name', DB::raw('SUM(order_items.quantity) as total_sold'), DB::raw('SUM(order_items.subtotal) as revenue'))
+            ->where('orders.payment_status', 'hoan_thanh')
+            ->whereBetween('orders.created_at', [$startDate, $endDate])
             ->groupBy('products.id', 'products.name')
             ->orderByDesc('total_sold')
-            ->whereBetween('order_items.created_at', [$startDate, $endDate])
             ->limit(10)
             ->get();
 
@@ -77,19 +85,47 @@ class ReportController extends Controller
         // Danh mục sản phẩm
         $categories = Category::where('is_active', true)->get();
 
+        // Tính toán tăng trưởng doanh thu so với hôm qua (nếu có)
+        $yesterdayRevenue = Order::where('payment_status', 'hoan_thanh')
+            ->whereDate('created_at', $startDate->copy()->subDay())
+            ->sum('final_amount');
+        $revenueGrowth = $yesterdayRevenue > 0 ? (($revenue - $yesterdayRevenue) / $yesterdayRevenue * 100) : 0;
+
+        // Tính trung bình đơn
+        $avgOrderValue = $revenueOrders > 0 ? round($revenue / $revenueOrders) : 0;
+
+        // Đơn hàng theo trạng thái
+        $orderStatusMap = [];
+        foreach ($ordersByStatus as $status) {
+            $orderStatusMap[$status->order_status] = $status->count;
+        }
+
+        $ordersPending = $orderStatusMap['dang_cho'] ?? 0;
+        $ordersProcessing = $orderStatusMap['dang_xu_ly'] ?? 0;
+        $ordersCompleted = $orderStatusMap['da_giao'] ?? 0;
+        $ordersCancelled = $orderStatusMap['da_huy'] ?? 0;
+
         return view('admin.reports.index', compact(
             'revenue',
+            'totalRevenue' => $revenue,
             'revenueOrders',
             'totalOrders',
+            'completedOrders',
             'canceledOrders',
             'newCustomers',
+            'totalCustomers',
             'topProducts',
             'dailyRevenue',
             'ordersByStatus',
             'paymentMethods',
             'categories',
             'startDate',
-            'endDate'
+            'endDate',
+            'revenueGrowth',
+            'avgOrderValue',
+            'ordersPending',
+            'ordersProcessing',
+            'ordersCancelled'
         ));
     }
 

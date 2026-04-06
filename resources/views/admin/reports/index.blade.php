@@ -138,30 +138,29 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @forelse($topProducts as $index => $product)
-                        <tr>
-                            <td>
-                                <span class="badge badge-primary" style="font-weight: 700;">{{ $index + 1 }}</span>
-                            </td>
-                            <td>
-                                <p style="margin: 0; font-size: 13px; font-weight: 600;">{{ $product->name ?? 'N/A' }}</p>
-                                <p style="margin: 2px 0 0 0; font-size: 11px; color: var(--text-muted);">{{ $product->category->name ?? 'N/A' }}</p>
-                            </td>
-                            <td style="text-align: right;">
-                                <span style="font-size: 13px; font-weight: 600;">x{{ $product->sales_count ?? 0 }}</span>
-                            </td>
-                            <td style="text-align: right;">
-                                <span style="font-size: 13px; font-weight: 600; color: var(--laser-blue);">{{ number_format($product->sales_revenue ?? 0, 0, ',', '.') }}₫</span>
-                            </td>
-                        </tr>
-                    @empty
-                        <tr>
-                            <td colspan="4" style="text-align: center; padding: var(--sp-lg);">
-                                <p style="margin: 0; font-size: 12px; color: var(--text-muted);">Không có dữ liệu</p>
-                            </td>
-                        </tr>
-                    @endforelse
-                </tbody>
+                @forelse($topProducts as $index => $product)
+                    <tr>
+                        <td>
+                            <span class="badge badge-primary" style="font-weight: 700;">{{ $index + 1 }}</span>
+                        </td>
+                        <td>
+                            <p style="margin: 0; font-size: 13px; font-weight: 600;">{{ $product->name ?? 'N/A' }}</p>
+                        </td>
+                        <td style="text-align: right;">
+                            <span style="font-size: 13px; font-weight: 600;">x{{ $product->total_sold ?? 0 }}</span>
+                        </td>
+                        <td style="text-align: right;">
+                            <span style="font-size: 13px; font-weight: 600; color: var(--laser-blue);">{{ number_format($product->revenue ?? 0, 0, ',', '.') }}₫</span>
+                        </td>
+                    </tr>
+                @empty
+                    <tr>
+                        <td colspan="4" style="text-align: center; padding: var(--sp-lg);">
+                            <p style="margin: 0; font-size: 12px; color: var(--text-muted);">Không có dữ liệu</p>
+                        </td>
+                    </tr>
+                @endforelse
+            </tbody>
             </table>
         </div>
 
@@ -243,18 +242,18 @@
                             <p style="margin: 2px 0 0 0; font-size: 11px; color: var(--text-muted);">({{ \Carbon\Carbon::parse($day->date)->format('l') }})</p>
                         </td>
                         <td style="text-align: right;">
-                            <span style="font-size: 13px; font-weight: 600;">{{ $day->order_count ?? 0 }}</span>
+                            <span style="font-size: 13px; font-weight: 600;">{{ $day->orders ?? 0 }}</span>
                         </td>
                         <td style="text-align: right;">
-                            <span style="font-size: 13px; font-weight: 600; color: var(--laser-blue);">{{ number_format($day->total_revenue ?? 0, 0, ',', '.') }}₫</span>
+                            <span style="font-size: 13px; font-weight: 600; color: var(--laser-blue);">{{ number_format($day->revenue ?? 0, 0, ',', '.') }}₫</span>
                         </td>
                         <td style="text-align: right;">
-                            <span style="font-size: 13px;">{{ number_format(($day->total_revenue ?? 0) / max($day->order_count ?? 1, 1), 0, ',', '.') }}₫</span>
+                            <span style="font-size: 13px;">{{ number_format(($day->revenue ?? 0) / max($day->orders ?? 1, 1), 0, ',', '.') }}₫</span>
                         </td>
                         <td style="text-align: right;">
-                            <span style="font-size: 13px; {{ ($day->revenue_change ?? 0) >= 0 ? 'color: var(--success);' : 'color: var(--error);' }}">
-                                <i class="fas fa-arrow-{{ ($day->revenue_change ?? 0) >= 0 ? 'up' : 'down' }}"></i>
-                                {{ abs($day->revenue_change ?? 0) }}%
+                            <span style="font-size: 13px; color: var(--success);">
+                                <i class="fas fa-arrow-up"></i>
+                                0%
                             </span>
                         </td>
                     </tr>
