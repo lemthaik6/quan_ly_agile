@@ -200,6 +200,12 @@
 
                 <!-- Action Buttons -->
                 <div style="display: flex; flex-direction: column; gap: 12px; margin-top: 20px;">
+                    @if($order->order_status === 'dang_cho')
+                        <button onclick="if(confirm('Bạn có chắc chắn muốn hủy đơn hàng này?')) { document.getElementById('cancelForm').submit(); }" style="background: linear-gradient(135deg, rgba(239,68,68,0.2), rgba(239,68,68,0.1)); color: #ef4444; border: 1px solid rgba(239,68,68,0.4); border-radius: 10px; padding: 10px 16px; text-align: center; font-weight: 600; font-size: 13px; cursor: pointer; transition: all 0.3s;" onmouseover="this.style.background='rgba(239,68,68,0.3)'; this.style.borderColor='rgba(239,68,68,0.6)';" onmouseout="this.style.background='rgba(239,68,68,0.2)'; this.style.borderColor='rgba(239,68,68,0.4)';">❌ Hủy Đơn Hàng</button>
+                        <form id="cancelForm" action="{{ route('order.cancel', $order->order_code) }}" method="POST" style="display:none;">
+                            @csrf
+                        </form>
+                    @endif
                     <a href="{{ route('order.list') }}" style="background: linear-gradient(135deg, rgba(0,212,255,0.15), rgba(0,212,255,0.08)); color: #00d4ff; border: 1px solid rgba(0,212,255,0.3); border-radius: 10px; padding: 10px 16px; text-align: center; text-decoration: none; font-weight: 600; font-size: 13px; transition: all 0.3s;" onmouseover="this.style.background='rgba(0,212,255,0.25)'; this.style.borderColor='rgba(0,212,255,0.5)';" onmouseout="this.style.background='rgba(0,212,255,0.15)'; this.style.borderColor='rgba(0,212,255,0.3)';">← Quay Lại Danh Sách</a>
                     <a href="{{ route('shop.index') }}" style="background: linear-gradient(135deg, #00d4ff, #8b5cf6); color: #080808; border: none; border-radius: 10px; padding: 10px 16px; text-align: center; text-decoration: none; font-weight: 600; font-size: 13px; transition: all 0.3s;" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 12px 32px rgba(0,212,255,0.4)';" onmouseout="this.style.transform=''; this.style.boxShadow='';">🛍️ Tiếp Tục Mua Sắm</a>
                 </div>

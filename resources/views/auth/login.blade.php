@@ -1,6 +1,6 @@
 @extends('layouts.auth')
 
-@section('title', 'Đăng nhập - LEMTHAI')
+@section('title', 'Đăng nhập - OutfitChill Shop')
 
 @section('content')
 <div class="auth-card">

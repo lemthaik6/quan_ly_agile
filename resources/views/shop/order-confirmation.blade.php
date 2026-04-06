@@ -7,7 +7,7 @@
     <div class="fade-in" style="margin-bottom: 80px;">
         <div style="font-size: 80px; margin-bottom: 20px; animation: bounce 2s infinite;">✅</div>
         <h1 class="glow-text" style="font-size: 48px; margin-bottom: 15px;">Đơn Hàng Thành Công!</h1>
-        <p style="color: #00f5ff; font-size: 18px; margin-bottom: 30px;">Cảm ơn bạn đã mua sắm tại LEMTHAI Store</p>
+        <p style="color: #00f5ff; font-size: 18px; margin-bottom: 30px;">Cảm ơn bạn đã mua sắm tại OutfitChill Shop</p>
     </div>
 
     <div class="grid grid-cols-2" style="max-width: 1000px; margin: 0 auto; gap: 30px;">

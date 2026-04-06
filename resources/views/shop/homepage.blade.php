@@ -16,7 +16,7 @@
         <div style="position: relative; z-index: 2; text-align: center; max-width: 1000px; padding: var(--sp-3xl) var(--sp-xl);">
             <div style="animation: slideDown 1s ease-out;">
                 <div style="display: inline-block; padding: 10px 24px; background: rgba(0, 212, 255, 0.1); border: 1px solid rgba(0, 212, 255, 0.3); border-radius: 50px; margin-bottom: var(--sp-lg);">
-                    <span style="color: var(--laser-blue); font-size: var(--text-sm); font-weight: var(--fw-bold); letter-spacing: 1px;">✨ CHÀO MỪNG ĐẾN VỚI LEMTHAI STORE</span>
+                    <span style="color: var(--laser-blue); font-size: var(--text-sm); font-weight: var(--fw-bold); letter-spacing: 1px;">✨ CHÀO MỪNG ĐẾN VỚI OUTFITCHILL SHOP</span>
                 </div>
 
                 <h1 style="font-size: clamp(3rem, 8vw, 5rem); font-weight: var(--fw-bold); line-height: 1.2; margin-bottom: var(--sp-lg); background: linear-gradient(135deg, var(--laser-blue) 0%, var(--electric-violet) 50%, var(--hot-pink) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">

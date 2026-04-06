@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@yield('title', 'Control Center') - LEMTHAI Admin</title>
+    <title>@yield('title', 'Control Center') - OutfitChill Admin</title>
     <script src="https://cdn.tailwindcss.com/3.4.17"></script>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -698,7 +698,7 @@
             <div class="sidebar-logo-content">
                 <div class="sidebar-logo-icon">LT</div>
                 <div class="sidebar-logo-text">
-                    <h3>LEMTHAI</h3>
+                    <h3>OutfitChill</h3>
                     <p>Control</p>
                 </div>
             </div>

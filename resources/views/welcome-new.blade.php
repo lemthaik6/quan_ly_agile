@@ -1,11 +1,11 @@
 @extends('layouts.shop')
 
-@section('title', 'LEMTHAI Store')
+@section('title', 'OutfitChill Shop')
 
 @section('content')
 <div style="text-align: center; padding: 60px 20px;">
     <p style="font-size: 16px; color: #00f5ff; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 20px;">Chào Mừng</p>
-    <h1 class="glow-text" style="font-size: 64px; margin-bottom: 20px;">LEMTHAI STORE</h1>
+    <h1 class="glow-text" style="font-size: 64px; margin-bottom: 20px;">OutfitChill Shop</h1>
     <p style="color: #ccc; font-size: 20px; margin-bottom: 50px;">Trải Nghiệm Mua Sắm Tương Lai</p>
 
     <div style="display: flex; justify-content: center; gap: 20px; margin-bottom: 80px;">

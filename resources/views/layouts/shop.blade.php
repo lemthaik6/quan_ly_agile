@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@yield('title') - LEMTHAI Store</title>
+    <title>@yield('title') - OutfitChill Shop</title>
     <style>
         /* ============================================
            PREMIUM CYBER-LUXE DESIGN SYSTEM
@@ -1349,7 +1349,7 @@
 <body>
     <!-- Navigation -->
     <nav class="nav">
-        <a href="{{ route('home') }}" class="logo">LEMTHAI</a>
+        <a href="{{ route('home') }}" class="logo">OutfitChill</a>
         <div class="nav-links">
             <a href="{{ route('home') }}" class="nav-link">Trang Chủ</a>
             <a href="{{ route('shop.index') }}" class="nav-link">Shop</a>
@@ -1403,7 +1403,7 @@
                 <!-- Brand -->
                 <div>
                     <a href="{{ route('home') }}" style="font-size: 20px; font-weight: var(--fw-bold); background: linear-gradient(135deg, var(--laser-blue), var(--electric-violet)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; text-decoration: none; display: inline-block; margin-bottom: var(--sp-lg);">
-                        LEMTHAI STORE
+                        OutfitChill Shop
                     </a>
                     <p style="color: var(--text-secondary); font-size: var(--text-sm); line-height: 1.6;">
                         Nơi tin cậy để mua sắm thời trang chất lượng cao với giá cạnh tranh nhất.
@@ -1448,7 +1448,7 @@
                 <div>
                     <h4 style="color: var(--text-primary); font-size: var(--text-base); font-weight: var(--fw-bold); margin-bottom: var(--sp-lg);">Liên Hệ</h4>
                     <ul style="list-style: none; display: flex; flex-direction: column; gap: var(--sp-md);">
-                        <li style="color: var(--text-secondary); font-size: var(--text-sm);">📧 support@lemthai.com</li>
+                        <li style="color: var(--text-secondary); font-size: var(--text-sm);">📧 support@outfitchill.com</li>
                         <li style="color: var(--text-secondary); font-size: var(--text-sm);">📱 1800-0000</li>
                         <li style="color: var(--text-secondary); font-size: var(--text-sm);">📍 123 Đường ABC, Hà Nội</li>
                     </ul>
@@ -1460,7 +1460,7 @@
             
             <!-- Bottom -->
             <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: var(--sp-lg);">
-                <p style="color: var(--text-muted); font-size: var(--text-sm);">© 2024 LEMTHAI Store. All rights reserved.</p>
+                <p style="color: var(--text-muted); font-size: var(--text-sm);">© 2024 OutfitChill Shop. All rights reserved.</p>
                 <div style="display: flex; gap: var(--sp-xl); flex-wrap: wrap;">
                     <a href="#" style="color: var(--text-muted); text-decoration: none; font-size: var(--text-sm); transition: color 0.3s;">Chính Sách Bảo Mật</a>
                     <a href="#" style="color: var(--text-muted); text-decoration: none; font-size: var(--text-sm); transition: color 0.3s;">Điều Khoản Sử Dụng</a>

@@ -45,6 +45,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/', [OrderController::class, 'myOrders'])->name('order.list');
         Route::get('/confirmation/{orderCode}', [OrderController::class, 'confirmation'])->name('order.confirmation');
         Route::get('/{orderCode}', [OrderController::class, 'show'])->name('order.show');
+        Route::post('/{orderCode}/cancel', [OrderController::class, 'cancel'])->name('order.cancel');
     });
 
     // Reviews

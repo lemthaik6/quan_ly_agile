@@ -154,4 +154,38 @@ class OrderController extends Controller
 
         return view('shop.order-detail', compact('order'));
     }
+
+    /**
+     * Cancel an order
+     */
+    public function cancel($orderCode)
+    {
+        $order = Order::where('order_code', $orderCode)->firstOrFail();
+
+        if ($order->user_id !== auth()->id()) {
+            abort(403);
+        }
+
+        // Only allow cancellation if order status is 'dang_cho' (pending)
+        if ($order->order_status !== 'dang_cho') {
+            return back()->with('error', 'Không thể hủy đơn hàng này. Chỉ có thể hủy những đơn hàng ở trạng thái đang chờ xử lý.');
+        }
+
+        // Update order status
+        $order->update(['order_status' => 'da_huy']);
+
+        // Create tracking log
+        OrderTracking::create([
+            'order_id' => $order->id,
+            'status' => 'da_huy',
+            'description' => 'Đơn hàng được hủy bởi khách hàng',
+        ]);
+
+        // Restore product sold count
+        foreach ($order->orderItems as $item) {
+            $item->product->decrement('sold_count', $item->quantity);
+        }
+
+        return back()->with('success', 'Đơn hàng đã được hủy thành công');
+    }
 }

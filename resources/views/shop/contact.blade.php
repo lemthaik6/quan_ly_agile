@@ -56,7 +56,7 @@
                             <div style="font-size: 1.5rem; color: var(--electric-violet); flex-shrink: 0;">📧</div>
                             <div>
                                 <h3 style="font-size: var(--text-lg); font-weight: var(--fw-bold); margin-bottom: var(--sp-sm); color: var(--electric-violet);">Email</h3>
-                                <p style="color: var(--text-secondary); margin: 0;"><a href="mailto:support@lemthai.com" style="color: var(--electric-violet); text-decoration: none;">support@lemthai.com</a></p>
+                                <p style="color: var(--text-secondary); margin: 0;"><a href="mailto:support@outfitchill.com" style="color: var(--electric-violet); text-decoration: none;">support@outfitchill.com</a></p>
                                 <p style="color: var(--text-muted); font-size: var(--text-sm); margin: var(--sp-sm) 0 0 0;">Chúng tôi sẽ phản hồi trong 24 giờ</p>
                             </div>
                         </div>
@@ -173,15 +173,11 @@
         </div>
     </section>
 
-    <!-- MAP SECTION (Optional) -->
+    <!-- MAP SECTION -->
     <section style="padding: var(--sp-3xl) var(--sp-xl); max-width: 1400px; margin: 0 auto;">
         <h2 style="font-size: var(--text-3xl); font-weight: var(--fw-bold); text-align: center; margin-bottom: var(--sp-xl);">Tìm Chúng Tôi</h2>
-        <div style="width: 100%; height: 400px; background: linear-gradient(135deg, rgba(0,212,255,0.1), rgba(139,92,246,0.1)); border: 1px solid rgba(255,255,255,0.1); border-radius: var(--radius-lg); display: flex; align-items: center; justify-content: center; color: var(--text-muted);">
-            <div style="text-align: center;">
-                <div style="font-size: 3rem; margin-bottom: var(--sp-lg);">📍</div>
-                <p style="font-size: 1.1rem;">Bản đồ sẽ được thêm vào sớm!</p>
-                <p style="color: var(--text-muted); margin-top: var(--sp-sm);">123 Đường Nguyễn Huệ, Quận 1, TP HCM</p>
-            </div>
+        <div style="width: 100%; border-radius: var(--radius-lg); overflow: hidden; box-shadow: 0 8px 32px rgba(0, 212, 255, 0.15);">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d5532.459118057122!2d105.74468687655526!3d21.03813478745389!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x313455e940879933%3A0xcf10b34e9f1a03df!2zVHLGsOG7nW5nIENhbyDEkeG6s25nIEZQVCBQb2x5dGVjaG5pYw!5e1!3m2!1svi!2s!4v1775186349766!5m2!1svi!2s" width="100%" height="450" style="border:none;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
         </div>
     </section>
 

@@ -20,8 +20,8 @@ class DatabaseSeeder extends Seeder
     {
         // Tạo admin user
         User::create([
-            'name' => 'Admin Lemthai',
-            'email' => 'admin@lemthai.com',
+            'name' => 'Admin OutfitChill',
+            'email' => 'admin@outfitchill.com',
             'password' => Hash::make('admin123'),
             'phone' => '0123456789',
             'role' => 'quan_tri',

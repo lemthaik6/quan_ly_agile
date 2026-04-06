@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@yield('title', 'LEMTHAI')</title>
+    <title>@yield('title', 'OutfitChill Shop')</title>
     <script src="https://cdn.tailwindcss.com/3.4.17"></script>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
@@ -101,9 +101,9 @@
                 <!-- Logo -->
                 <a href="/" class="flex items-center space-x-2">
                     <div class="w-10 h-10 bg-gradient-to-br from-cyan-400 to-blue-600 rounded-lg flex items-center justify-center">
-                        <span class="text-white font-orbitron font-bold text-lg">L</span>
+                        <span class="text-white font-orbitron font-bold text-lg">O</span>
                     </div>
-                    <span class="font-orbitron font-bold text-xl glow-text">LEMTHAI</span>
+                    <span class="font-orbitron font-bold text-xl glow-text">OutfitChill</span>
                 </a>
 
                 <!-- Nav Links -->
@@ -140,7 +140,7 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
             <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
                 <div>
-                    <h3 class="font-orbitron font-bold mb-4 glow-text">LEMTHAI</h3>
+                    <h3 class="font-orbitron font-bold mb-4 glow-text">OutfitChill</h3>
                     <p class="text-gray-400 text-sm">Tái định nghĩa trải nghiệm số với công nghệ tiên tiến.</p>
                 </div>
                 <div>
@@ -168,7 +168,7 @@
                 </div>
             </div>
             <div class="border-t border-cyan-500/10 pt-8 flex justify-between items-center text-sm text-gray-400">
-                <p>&copy; 2024 LEMTHAI. All rights reserved.</p>
+                <p>&copy; 2024 OutfitChill. All rights reserved.</p>
                 <div class="flex space-x-6">
                     <a href="#" class="hover:text-cyan-400">Privacy</a>
                     <a href="#" class="hover:text-cyan-400">Terms</a>

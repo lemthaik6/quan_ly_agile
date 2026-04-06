@@ -14,7 +14,7 @@
 
         <div style="position: relative; z-index: 2; text-align: center; max-width: 900px;">
             <h1 style="font-size: clamp(2.5rem, 8vw, 4rem); font-weight: var(--fw-bold); line-height: 1.2; margin-bottom: var(--sp-lg); background: linear-gradient(135deg, var(--laser-blue) 0%, var(--electric-violet) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">
-                Về LEMTHAI Store
+                Về OutfitChill Shop
             </h1>
             <p style="font-size: 1.2rem; color: var(--text-secondary); margin-bottom: 0; line-height: 1.8;">
                 Khám phá câu chuyện, sứ mệnh và tầm nhìn của chúng tôi
@@ -34,10 +34,10 @@
                     Khởi Đầu Từ Một Đam Mê
                 </h2>
                 <p style="font-size: 1.1rem; color: var(--text-secondary); line-height: 1.8; margin-bottom: var(--sp-lg);">
-                    LEMTHAI Store được thành lập vào năm 2020 với một mục đích đơn giản: mang đến cho khách hàng Việt những sản phẩm thời trang chất lượng cao với giá cả hợp lý. Chúng tôi bắt đầu như một cửa hàng nhỏ, nhưng nhờ vào sự tin tưởng và ủng hộ của các khách hàng, chúng tôi đã phát triển thành một thương hiệu được biết đến rộng rãi.
+                    OutfitChill Shop được thành lập vào năm 2020 với một mục đích đơn giản: mang đến cho khách hàng Việt những sản phẩm thời trang chất lượng cao với giá cả hợp lý. Chúng tôi bắt đầu như một cửa hàng nhỏ, nhưng nhờ vào sự tin tưởng và ủng hộ của các khách hàng, chúng tôi đã phát triển thành một thương hiệu được biết đến rộng rãi.
                 </p>
                 <p style="font-size: 1.1rem; color: var(--text-secondary); line-height: 1.8; margin-bottom: var(--sp-lg);">
-                    Hôm nay, LEMTHAI Store tự hào là nơi hội tụ những người yêu thích thời trang, nơi bạn có thể tìm thấy những bộ sưu tập độc quyền từ các nhà thiết kế nổi tiếng cũng như các thương hiệu quốc tế hàng đầu.
+                    Hôm nay, OutfitChill Shop tự hào là nơi hội tụ những người yêu thích thời trang, nơi bạn có thể tìm thấy những bộ sưu tập độc quyền từ các nhà thiết kế nổi tiếng cũng như các thương hiệu quốc tế hàng đầu.
                 </p>
                 <a href="{{ route('shop.index') }}" style="display: inline-flex; align-items: center; gap: var(--sp-md); padding: 14px 32px; background: linear-gradient(135deg, var(--laser-blue), var(--laser-blue-dim)); color: var(--obsidian); border: none; border-radius: var(--radius-lg); font-weight: var(--fw-bold); text-decoration: none; cursor: pointer; transition: all 0.3s; box-shadow: 0 10px 30px rgba(0, 212, 255, 0.25);" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 15px 40px rgba(0, 212, 255, 0.35)';" onmouseout="this.style.transform=''; this.style.boxShadow='0 10px 30px rgba(0, 212, 255, 0.25)';">
                     🛍️ Khám Phá Sản Phẩm
