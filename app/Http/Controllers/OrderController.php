@@ -129,12 +129,19 @@ class OrderController extends Controller
      */
     public function myOrders()
     {
-        $orders = auth()->user()->orders()
+        $activeOrders = auth()->user()->orders()
+            ->where('order_status', '!=', 'da_huy')
             ->with(['orderItems', 'trackings'])
             ->orderBy('created_at', 'desc')
             ->paginate(10);
 
-        return view('shop.my-orders', compact('orders'));
+        $canceledOrders = auth()->user()->orders()
+            ->where('order_status', 'da_huy')
+            ->with(['orderItems', 'trackings'])
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        return view('shop.my-orders', compact('activeOrders', 'canceledOrders'));
     }
 
     /**
