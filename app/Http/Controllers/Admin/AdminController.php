@@ -80,10 +80,13 @@ class AdminController extends Controller
         // Đơn hàng hôm nay
         $todayOrders = Order::whereDate('created_at', now()->today())->count();
 
-        // Top 5 sản phẩm bán chạy nhất
-        $topSellingProducts = Product::select('name', 'sold_count', 'price')
-            ->where('is_active', 1)
-            ->orderBy('sold_count', 'desc')
+        // Top 5 sản phẩm bán chạy nhất - tính từ order_items thực tế
+        $topSellingProducts = DB::table('order_items')
+            ->join('products', 'order_items.product_id', '=', 'products.id')
+            ->select('products.id', 'products.name', 'products.price', DB::raw('SUM(order_items.quantity) as sold_count'))
+            ->where('products.is_active', 1)
+            ->groupBy('products.id', 'products.name', 'products.price')
+            ->orderByRaw('SUM(order_items.quantity) DESC')
             ->limit(5)
             ->get();
 
