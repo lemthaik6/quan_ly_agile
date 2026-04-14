@@ -34,8 +34,31 @@ class CartController extends Controller
             return response()->json(['error' => 'Product is no longer available'], 400);
         }
 
+        $selectedColor = $request->color ? trim($request->color) : null;
+        $selectedSize = $request->size ? trim($request->size) : null;
+
+        if ($selectedColor) {
+            $colorVariant = $product->colors->firstWhere('color_name', $selectedColor);
+            if (!$colorVariant) {
+                return response()->json(['error' => 'Màu không hợp lệ cho sản phẩm này'], 400);
+            }
+            if ($colorVariant->stock_quantity < $request->quantity) {
+                return response()->json(['error' => 'Số lượng màu này không đủ trong kho'], 400);
+            }
+        }
+
+        if ($selectedSize) {
+            $sizeVariant = $product->sizes->firstWhere('size_name', $selectedSize);
+            if (!$sizeVariant) {
+                return response()->json(['error' => 'Kích cỡ không hợp lệ cho sản phẩm này'], 400);
+            }
+            if ($sizeVariant->stock_quantity < $request->quantity) {
+                return response()->json(['error' => 'Số lượng kích cỡ này không đủ trong kho'], 400);
+            }
+        }
+
         $cart = session()->get('cart', []);
-        $cartKey = $this->getCartKey($request->product_id, $request->color, $request->size);
+        $cartKey = $this->getCartKey($request->product_id, $selectedColor, $selectedSize);
 
         if (isset($cart[$cartKey])) {
             $cart[$cartKey]['quantity'] += $request->quantity;
@@ -47,8 +70,8 @@ class CartController extends Controller
                 'product_image' => $product->image,
                 'price' => $product->discount_price ?? $product->price,
                 'quantity' => $request->quantity,
-                'color' => $request->color,
-                'size' => $request->size,
+                'color' => $selectedColor,
+                'size' => $selectedSize,
             ];
         }
 

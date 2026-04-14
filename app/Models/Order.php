@@ -45,6 +45,14 @@ class Order extends Model
     }
 
     /**
+     * Aliasing order_code as order_number for legacy views and search
+     */
+    public function getOrderNumberAttribute(): ?string
+    {
+        return $this->order_code;
+    }
+
+    /**
      * Get all order items for this order
      */
     public function orderItems(): HasMany

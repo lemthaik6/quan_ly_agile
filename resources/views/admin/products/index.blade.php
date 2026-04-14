@@ -70,6 +70,8 @@
                         <th>Sản Phẩm</th>
                         <th>Danh Mục</th>
                         <th>Giá</th>
+                        <th>Màu</th>
+                        <th>Size</th>
                         <th>Tồn Kho</th>
                         <th>Trạng Thái</th>
                         <th style="text-align: right; width: 120px;">Hành Động</th>
@@ -101,6 +103,12 @@
                             </td>
                             <td>
                                 <span style="font-size: 14px; font-weight: 600; color: var(--laser-blue);">{{ number_format($product->price, 0, ',', '.') }}₫</span>
+                            </td>
+                            <td>
+                                <span style="font-size: 13px;">{{ $product->colors->count() }} màu</span>
+                            </td>
+                            <td>
+                                <span style="font-size: 13px;">{{ $product->sizes->count() }} size</span>
                             </td>
                             <td>
                                 <div style="display: flex; align-items: center; gap: var(--sp-sm);">

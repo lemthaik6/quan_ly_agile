@@ -85,7 +85,52 @@
             </div>
         </div>
 
-        <!-- Image & Media -->
+        <!-- Variants -->
+        <div class="panel" style="padding: var(--sp-xl);">
+            <h3 style="margin: 0 0 var(--sp-xl) 0; font-size: 16px; font-weight: 600;">Biến Thể Màu & Size</h3>
+
+            <div style="margin-bottom: var(--sp-xl);">
+                <h4 style="font-size: 14px; font-weight: 600; margin-bottom: 12px;">Màu sắc</h4>
+                @if($colors->count() > 0)
+                    <div style="display: grid; gap: 12px;">
+                        @foreach($colors as $color)
+                            <div style="display: grid; grid-template-columns: 1fr 120px; gap: 10px; align-items: center;">
+                                <label style="display: flex; align-items: center; gap: 12px;">
+                                    <input type="checkbox" name="product_colors[ids][]" value="{{ $color->id }}" {{ in_array($color->id, old('product_colors.ids', [])) ? 'checked' : '' }}>
+                                    <span style="display: flex; align-items: center; gap: 10px;">
+                                        <span style="width: 18px; height: 18px; border-radius: 50%; background: {{ $color->hex_code }}; border: 1px solid rgba(255,255,255,0.15);"></span>
+                                        {{ $color->name }}
+                                    </span>
+                                </label>
+                                <input type="number" name="product_colors[stock][{{ $color->id }}]" value="{{ old('product_colors.stock.' . $color->id, 0) }}" min="0" placeholder="Kho">
+                            </div>
+                        @endforeach
+                    </div>
+                @else
+                    <p style="color: var(--text-muted);">Chưa có màu được tạo. Vui lòng thêm màu trong <a href="{{ route('admin.colors.index') }}" style="color: var(--laser-blue);">quản lý màu</a>.</p>
+                @endif
+            </div>
+
+            <div>
+                <h4 style="font-size: 14px; font-weight: 600; margin-bottom: 12px;">Kích cỡ</h4>
+                @if($sizes->count() > 0)
+                    <div style="display: grid; gap: 12px;">
+                        @foreach($sizes as $size)
+                            <div style="display: grid; grid-template-columns: 1fr 120px; gap: 10px; align-items: center;">
+                                <label style="display: flex; align-items: center; gap: 12px;">
+                                    <input type="checkbox" name="product_sizes[ids][]" value="{{ $size->id }}" {{ in_array($size->id, old('product_sizes.ids', [])) ? 'checked' : '' }}>
+                                    {{ $size->name }}
+                                </label>
+                                <input type="number" name="product_sizes[stock][{{ $size->id }}]" value="{{ old('product_sizes.stock.' . $size->id, 0) }}" min="0" placeholder="Kho">
+                            </div>
+                        @endforeach
+                    </div>
+                @else
+                    <p style="color: var(--text-muted);">Chưa có kích cỡ được tạo. Vui lòng thêm kích cỡ trong <a href="{{ route('admin.sizes.index') }}" style="color: var(--laser-blue);">quản lý kích cỡ</a>.</p>
+                @endif
+            </div>
+        </div>
+
         <div class="panel" style="padding: var(--sp-xl);">
             <h3 style="margin: 0 0 var(--sp-xl) 0; font-size: 16px; font-weight: 600;">Hình Ảnh</h3>
 
@@ -170,5 +215,6 @@
             previewImage({ target: { files: e.dataTransfer.files } });
         });
     }
+
 </script>
 @endsection

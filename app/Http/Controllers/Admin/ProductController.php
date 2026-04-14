@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Product;
 use App\Models\Category;
+use App\Models\Color;
+use App\Models\Size;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
@@ -47,7 +49,10 @@ class ProductController extends Controller
     public function create()
     {
         $categories = Category::where('is_active', 1)->get();
-        return view('admin.products.create', compact('categories'));
+        $colors = Color::where('is_active', true)->get();
+        $sizes = Size::where('is_active', true)->get();
+
+        return view('admin.products.create', compact('categories', 'colors', 'sizes'));
     }
 
     /**
@@ -68,6 +73,16 @@ class ProductController extends Controller
             'image' => 'nullable|image|max:2048',
             'is_featured' => 'boolean',
             'is_active' => 'boolean',
+            'product_colors' => 'nullable|array',
+            'product_colors.ids' => 'nullable|array',
+            'product_colors.ids.*' => 'nullable|exists:colors,id',
+            'product_colors.stock' => 'nullable|array',
+            'product_colors.stock.*' => 'nullable|integer|min:0',
+            'product_sizes' => 'nullable|array',
+            'product_sizes.ids' => 'nullable|array',
+            'product_sizes.ids.*' => 'nullable|exists:sizes,id',
+            'product_sizes.stock' => 'nullable|array',
+            'product_sizes.stock.*' => 'nullable|integer|min:0',
         ]);
 
         // Tạo slug từ tên
@@ -81,7 +96,14 @@ class ProductController extends Controller
             $validated['image'] = 'products/' . $imageName;
         }
 
-        Product::create($validated);
+        $product = Product::create($validated);
+        $this->syncProductVariants(
+            $product,
+            $request->input('product_colors.ids', []),
+            $request->input('product_colors.stock', []),
+            $request->input('product_sizes.ids', []),
+            $request->input('product_sizes.stock', [])
+        );
 
         return redirect()->route('admin.products.index')
                         ->with('success', 'Sản phẩm đã được tạo thành công!');
@@ -93,7 +115,10 @@ class ProductController extends Controller
     public function edit(Product $product)
     {
         $categories = Category::where('is_active', 1)->get();
-        return view('admin.products.edit', compact('product', 'categories'));
+        $colors = Color::where('is_active', true)->get();
+        $sizes = Size::where('is_active', true)->get();
+
+        return view('admin.products.edit', compact('product', 'categories', 'colors', 'sizes'));
     }
 
     /**
@@ -114,6 +139,16 @@ class ProductController extends Controller
             'image' => 'nullable|image|max:2048',
             'is_featured' => 'boolean',
             'is_active' => 'boolean',
+            'product_colors' => 'nullable|array',
+            'product_colors.ids' => 'nullable|array',
+            'product_colors.ids.*' => 'nullable|exists:colors,id',
+            'product_colors.stock' => 'nullable|array',
+            'product_colors.stock.*' => 'nullable|integer|min:0',
+            'product_sizes' => 'nullable|array',
+            'product_sizes.ids' => 'nullable|array',
+            'product_sizes.ids.*' => 'nullable|exists:sizes,id',
+            'product_sizes.stock' => 'nullable|array',
+            'product_sizes.stock.*' => 'nullable|integer|min:0',
         ]);
 
         // Cập nhật slug nếu tên thay đổi
@@ -135,9 +170,52 @@ class ProductController extends Controller
         }
 
         $product->update($validated);
+        $this->syncProductVariants(
+            $product,
+            $request->input('product_colors.ids', []),
+            $request->input('product_colors.stock', []),
+            $request->input('product_sizes.ids', []),
+            $request->input('product_sizes.stock', [])
+        );
 
         return redirect()->route('admin.products.index')
                         ->with('success', 'Sản phẩm đã được cập nhật!');
+    }
+
+    /**
+     * Đồng bộ biến thể sản phẩm
+     */
+    private function syncProductVariants(Product $product, array $colorIds, array $colorStocks, array $sizeIds, array $sizeStocks)
+    {
+        $product->colors()->delete();
+        $product->sizes()->delete();
+
+        foreach ($colorIds as $colorId) {
+            $color = Color::find($colorId);
+            if (!$color) {
+                continue;
+            }
+
+            $product->colors()->create([
+                'color_id' => $color->id,
+                'color_name' => $color->name,
+                'color_hex' => $color->hex_code,
+                'stock_quantity' => $colorStocks[$colorId] ?? 0,
+            ]);
+        }
+
+        foreach ($sizeIds as $sizeId) {
+            $size = Size::find($sizeId);
+            if (!$size) {
+                continue;
+            }
+
+            $product->sizes()->create([
+                'size_id' => $size->id,
+                'size_name' => $size->name,
+                'stock_quantity' => $sizeStocks[$sizeId] ?? 0,
+            ]);
+        }
     }
 
     /**

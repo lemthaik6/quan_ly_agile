@@ -35,15 +35,8 @@ class AdminController extends Controller
             ->count();
 
         // Đơn hàng gần đây
-        $recentOrders = Order::with('user')
+        $recentOrders = Order::with(['user', 'orderItems.product'])
             ->orderBy('created_at', 'desc')
-            ->limit(5)
-            ->get();
-
-        // Sản phẩm bán chạy
-        $topProducts = Product::select('id', 'name', 'price', 'sold_count', 'quantity_in_stock')
-            ->where('is_active', 1)
-            ->orderBy('sold_count', 'desc')
             ->limit(5)
             ->get();
 
@@ -80,11 +73,16 @@ class AdminController extends Controller
         // Đơn hàng hôm nay
         $todayOrders = Order::whereDate('created_at', now()->today())->count();
 
-        // Top 5 sản phẩm bán chạy nhất - tính từ order_items thực tế
+        // Top 5 sản phẩm bán chạy nhất trong danh mục Quần áo - Thời trang
         $topSellingProducts = DB::table('order_items')
+            ->join('orders', 'order_items.order_id', '=', 'orders.id')
             ->join('products', 'order_items.product_id', '=', 'products.id')
+            ->join('categories', 'products.category_id', '=', 'categories.id')
             ->select('products.id', 'products.name', 'products.price', DB::raw('SUM(order_items.quantity) as sold_count'))
             ->where('products.is_active', 1)
+            ->where('orders.payment_status', 'hoan_thanh')
+            ->where('orders.order_status', '!=', 'da_huy')
+            ->where('categories.slug', 'quan-ao-thoi-trang')
             ->groupBy('products.id', 'products.name', 'products.price')
             ->orderByRaw('SUM(order_items.quantity) DESC')
             ->limit(5)
@@ -110,7 +108,6 @@ class AdminController extends Controller
             'totalCustomers',
             'newCustomersThisMonth',
             'recentOrders',
-            'topProducts',
             'monthlyRevenue',
             'orderStatuses',
             'orderStatusCounts',

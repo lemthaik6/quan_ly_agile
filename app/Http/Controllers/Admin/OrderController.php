@@ -20,7 +20,7 @@ class OrderController extends Controller
         // Tìm kiếm theo mã đơn hàng hoặc tên khách hàng
         if ($request->has('search') && $request->search != '') {
             $search = $request->search;
-            $query->where('order_number', 'like', "%$search%")
+            $query->where('order_code', 'like', "%$search%")
                   ->orWhereHas('user', function ($q) use ($search) {
                       $q->where('name', 'like', "%$search%");
                   });

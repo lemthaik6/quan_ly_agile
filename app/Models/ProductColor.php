@@ -9,6 +9,7 @@ class ProductColor extends Model
 {
     protected $fillable = [
         'product_id',
+        'color_id',
         'color_name',
         'color_hex',
         'stock_quantity',
@@ -20,5 +21,13 @@ class ProductColor extends Model
     public function product(): BelongsTo
     {
         return $this->belongsTo(Product::class);
+    }
+
+    /**
+     * Get the color this product color belongs to
+     */
+    public function color(): BelongsTo
+    {
+        return $this->belongsTo(Color::class);
     }
 }

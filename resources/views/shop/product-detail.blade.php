@@ -165,7 +165,7 @@
                     <label>Chọn Màu Sắc</label>
                     <div class="variant-selector" id="color-selector">
                         @foreach($product->colors as $color)
-                            <button type="button" class="variant-btn" onclick="selectVariant('color', '{{ $color->color_name }}', this)">
+                            <button type="button" class="variant-btn" data-color="{{ $color->color_name }}" onclick="selectVariant('color', this)">
                                 <span class="color-swatch" style="background-color: {{ $color->color_hex }};"></span>
                                 {{ $color->color_name }}
                             </button>
@@ -180,7 +180,7 @@
                     <label>Chọn Kích Cỡ</label>
                     <div class="variant-selector" id="size-selector">
                         @foreach($product->sizes as $size)
-                            <button type="button" class="variant-btn" onclick="selectVariant('size', '{{ $size->size_name }}', this)">
+                            <button type="button" class="variant-btn" data-size="{{ $size->size_name }}" onclick="selectVariant('size', this)">
                                 {{ $size->size_name }}
                             </button>
                         @endforeach
@@ -296,7 +296,8 @@
 let selectedColor = null;
 let selectedSize = null;
 
-function selectVariant(type, value, element) {
+function selectVariant(type, element) {
+    const value = type === 'color' ? element.dataset.color : element.dataset.size;
     if (type === 'color') {
         selectedColor = value;
         document.querySelectorAll('#color-selector .variant-btn').forEach(btn => btn.classList.remove('active'));
@@ -319,6 +320,18 @@ function decreaseQuantity() {
 
 function addToCart() {
     const quantity = parseInt(document.getElementById('quantity').value);
+    const hasColorOptions = document.querySelectorAll('#color-selector .variant-btn').length > 0;
+    const hasSizeOptions = document.querySelectorAll('#size-selector .variant-btn').length > 0;
+
+    if (hasColorOptions && !selectedColor) {
+        alert('Vui lòng chọn màu trước khi thêm vào giỏ hàng.');
+        return;
+    }
+
+    if (hasSizeOptions && !selectedSize) {
+        alert('Vui lòng chọn kích cỡ trước khi thêm vào giỏ hàng.');
+        return;
+    }
 
     fetch('{{ route("cart.add") }}', {
         method: 'POST',
@@ -347,5 +360,16 @@ function addToCart() {
         alert('❌ Lỗi kết nối');
     });
 }
+
+window.addEventListener('DOMContentLoaded', () => {
+    const firstColor = document.querySelector('#color-selector .variant-btn');
+    if (firstColor) {
+        firstColor.click();
+    }
+    const firstSize = document.querySelector('#size-selector .variant-btn');
+    if (firstSize) {
+        firstSize.click();
+    }
+});
 </script>
 @endsection

@@ -120,8 +120,16 @@
                     <div style="padding: var(--sp-lg); background: linear-gradient(90deg, rgba(0,212,255,0.05), transparent); border-radius: var(--radius-md); border: var(--border-thin); transition: all 0.3s; cursor: pointer;">
                         <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: var(--sp-sm);">
                             <div>
-                                <p style="margin: 0; font-size: 14px; font-weight: 600; color: var(--text-primary);">{{ $order->order_number ?? '#' . $order->id }}</p>
-                                <p style="margin: 2px 0 0 0; font-size: 12px; color: var(--text-muted);">{{ $order->user->name ?? 'N/A' }}</p>
+                                <p style="margin: 0; font-size: 14px; font-weight: 600; color: var(--text-primary);">{{ $order->order_number ?? $order->order_code ?? '#' . $order->id }}</p>
+                                <p style="margin: 2px 0 0 0; font-size: 12px; color: var(--text-muted);">
+                                    {{ $order->user->name ?? 'Khách ẩn danh' }}
+                                    @php
+                                        $productNames = $order->orderItems->pluck('product.name')->filter()->unique()->take(2);
+                                    @endphp
+                                    @if($productNames->isNotEmpty())
+                                        · {{ $productNames->implode(', ') }}{{ $order->orderItems->count() > 2 ? '...' : '' }}
+                                    @endif
+                                </p>
                             </div>
                             <div style="text-align: right;">
                                 <p style="margin: 0; font-size: 14px; font-weight: 600; color: var(--laser-blue);">{{ number_format($order->final_amount, 0, ',', '.') }}₫</p>
@@ -140,7 +148,7 @@
         <!-- Top Products -->
         <div class="panel" style="padding: var(--sp-xl); display: flex; flex-direction: column;">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--sp-xl);">
-                <h3 style="margin: 0; font-size: 16px; font-weight: 600;">Sản Phẩm Bán Chạy</h3>
+                <h3 style="margin: 0; font-size: 16px; font-weight: 600;">Sản Phẩm Bán Chạy (Quần Áo)</h3>
                 <a href="{{ route('admin.products.index') }}" style="font-size: 12px; color: var(--laser-blue); text-decoration: none; transition: color 0.3s;">Top 10 →</a>
             </div>
             <div style="flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: var(--sp-md);">

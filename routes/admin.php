@@ -3,8 +3,10 @@
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\ColorController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\ReportController;
+use App\Http\Controllers\Admin\SizeController;
 use App\Http\Middleware\IsAdmin;
 use Illuminate\Support\Facades\Route;
 
@@ -20,6 +22,10 @@ Route::middleware(['auth', IsAdmin::class])->prefix('admin')->name('admin.')->gr
     // Categories
     Route::resource('categories', CategoryController::class);
     Route::post('categories/{category}/toggle-active', [CategoryController::class, 'toggleActive'])->name('categories.toggle-active');
+
+    // Colors & Sizes
+    Route::resource('colors', ColorController::class);
+    Route::resource('sizes', SizeController::class);
 
     // Orders
     Route::resource('orders', OrderController::class, ['except' => ['create', 'store', 'edit', 'update', 'destroy']]);

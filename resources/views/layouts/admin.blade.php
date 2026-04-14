@@ -722,6 +722,14 @@
                     <i class="fas fa-tags"></i>
                     <span>Danh mục</span>
                 </a>
+                <a href="{{ route('admin.colors.index') }}" class="nav-link {{ request()->routeIs('admin.colors.*') ? 'active' : '' }}">
+                    <i class="fas fa-palette"></i>
+                    <span>Màu sắc</span>
+                </a>
+                <a href="{{ route('admin.sizes.index') }}" class="nav-link {{ request()->routeIs('admin.sizes.*') ? 'active' : '' }}">
+                    <i class="fas fa-ruler-horizontal"></i>
+                    <span>Kích cỡ</span>
+                </a>
             </div>
 
             <div class="nav-section">
